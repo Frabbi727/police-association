@@ -11,8 +11,14 @@ export function Footer() {
           {/* Logo & About Column */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Shield className="h-6 w-6 text-accent" />
-              <span className="font-bold text-lg tracking-tight">Metropolitan Police Association</span>
+              <div className="h-8 w-8 bg-card border border-border/80 rounded-lg flex items-center justify-center overflow-hidden">
+                <img
+                  src="/images/309563497_415511680752905_2210960597977463845_n.png"
+                  className="h-7 w-7 object-contain"
+                  alt="Bangladesh Police Association Logo"
+                />
+              </div>
+              <span className="font-bold text-base tracking-tight">Bangladesh Police Association</span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
               Representing the men and women of law enforcement. Dedicated to promoting community safety, supporting our members, and honoring those who serve.
@@ -106,7 +112,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-2xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} Metropolitan Police Association. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Bangladesh Police Association. All rights reserved.</p>
           <div className="flex gap-6">
             <span className="hover:text-foreground cursor-pointer">Privacy Policy</span>
             <span className="hover:text-foreground cursor-pointer">Terms of Service</span>

@@ -139,9 +139,13 @@ export default function ProfileAndIdCard() {
                 {/* Header Logo */}
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <div className="flex items-center gap-2">
-                    <Shield className="h-7 w-7 text-accent" />
+                    <img
+                      src="/images/309563497_415511680752905_2210960597977463845_n.png"
+                      className="h-7 w-7 object-contain"
+                      alt="Logo"
+                    />
                     <div className="flex flex-col text-left">
-                      <span className="text-xs font-black uppercase tracking-wider">Metropolitan</span>
+                      <span className="text-xs font-black uppercase tracking-wider">Bangladesh</span>
                       <span className="text-[7px] -mt-1 font-bold uppercase tracking-widest text-accent">Police Association</span>
                     </div>
                   </div>

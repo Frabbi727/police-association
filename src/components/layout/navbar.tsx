@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Sun, Moon, Shield, User, Heart, LogOut, ShieldAlert } from "lucide-react";
+import { Menu, X, Sun, Moon, Shield, User, Heart, LogOut } from "lucide-react";
 import { useTheme } from "../theme-provider";
 import { useDemo } from "@/lib/demo-context";
 import { Button } from "@/components/ui/button";
@@ -11,16 +11,16 @@ import { Button } from "@/components/ui/button";
 export function Navbar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
-  const { user, logout } = useDemo();
+  const { user, logout, language, toggleLanguage, t } = useDemo();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const navItems = [
-    { name: "Home", href: "/" },
-    { name: "About Us", href: "/about" },
-    { name: "News & FAQ", href: "/news" },
-    { name: "Contact", href: "/contact" },
-    ...(user ? [{ name: "Portal Dashboard", href: "/dashboard" }] : [{ name: "Members Portal", href: "/dashboard" }]),
-    { name: "Admin View", href: "/admin" },
+    { name: t("Home", "Home"), href: "/" },
+    { name: t("About Us", "About Us"), href: "/about" },
+    { name: t("News & FAQ", "News & FAQ"), href: "/news" },
+    { name: t("Contact", "Contact"), href: "/contact" },
+    ...(user ? [{ name: t("Portal Dashboard", "Portal Dashboard"), href: "/dashboard" }] : [{ name: t("Members Portal", "Members Portal"), href: "/dashboard" }]),
+    { name: t("Admin View", "Admin View"), href: "/admin" },
   ];
 
   const isActive = (path: string) => pathname === path;
@@ -28,18 +28,22 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md transition-all duration-300">
       <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        
         {/* Brand/Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg transition-transform group-hover:scale-105">
-            <Shield className="h-6 w-6 text-accent group-hover:rotate-12 transition-transform duration-300" />
-            <div className="absolute inset-0 rounded-xl bg-accent/25 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300" />
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-card border border-border/80 shadow-lg transition-transform group-hover:scale-105 overflow-hidden">
+            <img
+              src="/images/309563497_415511680752905_2210960597977463845_n.png"
+              className="h-8.5 w-8.5 object-contain"
+              alt="Bangladesh Police Association Logo"
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-base font-bold tracking-tight text-foreground sm:text-lg">
-              Metropolitan
+              {t("Bangladesh", "Bangladesh")}
             </span>
             <span className="text-2xs -mt-1 font-semibold uppercase tracking-widest text-accent">
-              Police Association
+              {t("Police Association", "Police Association")}
             </span>
           </div>
         </Link>
@@ -63,7 +67,20 @@ export function Navbar() {
         </nav>
 
         {/* Action Controls */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-3">
+          
+          {/* Language Toggle */}
+          <Button
+            variant="ghost"
+            onClick={toggleLanguage}
+            className="rounded-xl h-10 px-3 border border-border hover:bg-muted font-bold text-xs flex items-center gap-1 text-foreground"
+            aria-label="Toggle language"
+          >
+            <span>{language === "en" ? "EN" : "বাংলা"}</span>
+            <span className="text-2xs opacity-40">/</span>
+            <span className="text-2xs opacity-40 font-normal">{language === "en" ? "বাংলা" : "EN"}</span>
+          </Button>
+
           {/* Theme Toggle */}
           <Button
             variant="ghost"
@@ -96,7 +113,7 @@ export function Navbar() {
             <Link href="/dashboard">
               <Button variant="outline" className="rounded-xl flex items-center gap-2 font-medium border-border">
                 <User className="h-4 w-4" />
-                Portal Login
+                {t("Portal Login", "Portal Login")}
               </Button>
             </Link>
           )}
@@ -105,13 +122,24 @@ export function Navbar() {
           <Link href="/donate">
             <Button className="rounded-xl bg-accent hover:bg-accent/90 text-accent-foreground flex items-center gap-2 font-bold shadow-lg shadow-accent/20">
               <Heart className="h-4 w-4 fill-current" />
-              Support Us
+              {t("Support Us", "Support Us")}
             </Button>
           </Link>
         </div>
 
         {/* Mobile menu trigger */}
-        <div className="flex md:hidden items-center gap-3">
+        <div className="flex md:hidden items-center gap-2">
+          
+          {/* Language Toggle Mobile */}
+          <Button
+            variant="ghost"
+            onClick={toggleLanguage}
+            className="rounded-xl h-9 px-2 border border-border font-bold text-xs flex items-center gap-0.5 text-foreground"
+            aria-label="Toggle language"
+          >
+            <span>{language === "en" ? "EN" : "বাংলা"}</span>
+          </Button>
+
           <Button
             variant="ghost"
             size="icon"
@@ -139,7 +167,7 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer (Accessible overlay using simple native transition check) */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-border bg-background px-4 py-4 animate-in fade-in slide-in-from-top duration-200">
           <nav className="flex flex-col gap-4">
@@ -162,20 +190,20 @@ export function Navbar() {
               {user ? (
                 <Button variant="outline" onClick={() => { logout(); setMobileMenuOpen(false); }} className="rounded-xl w-full flex items-center justify-center gap-2">
                   <LogOut className="h-4 w-4" />
-                  Logout
+                  {t("Logout", "Logout")}
                 </Button>
               ) : (
                 <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="w-full">
                   <Button variant="outline" className="rounded-xl w-full flex items-center justify-center gap-2">
                     <User className="h-4 w-4" />
-                    Portal Login
+                    {t("Portal Login", "Portal Login")}
                   </Button>
                 </Link>
               )}
               <Link href="/donate" onClick={() => setMobileMenuOpen(false)} className="w-full">
                 <Button className="rounded-xl w-full bg-accent hover:bg-accent/90 text-accent-foreground flex items-center justify-center gap-2 font-bold">
                   <Heart className="h-4 w-4 fill-current" />
-                  Support Us
+                  {t("Support Us", "Support Us")}
                 </Button>
               </Link>
             </div>

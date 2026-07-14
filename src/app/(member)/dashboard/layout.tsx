@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { useDemo } from "@/lib/demo-context";
+import { useDemo, translateDigits } from "@/lib/demo-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -45,7 +45,7 @@ type LoginInputs = z.infer<typeof loginSchema>;
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { user, login, logout, notifications, markNotificationRead } = useDemo();
+  const { user, login, logout, notifications, markNotificationRead, t, language } = useDemo();
   const [mobileNavOpen, setMobileNavOpen] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const [loginError, setLoginError] = React.useState<string | null>(null);
@@ -70,25 +70,25 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     try {
       const success = await login(data.badgeNumber, data.email, data.password);
       if (!success) {
-        setLoginError("Verification failed. Please check badge or email.");
+        setLoginError(t("Verification failed. Please check badge or email.", "Verification failed. Please check badge or email."));
       }
     } catch (e) {
-      setLoginError("An unexpected error occurred during secure authentication.");
+      setLoginError(t("An unexpected error occurred during secure authentication.", "An unexpected error occurred during secure authentication."));
     }
   };
 
   // Nav Items configuration
   const sidebarItems = [
-    { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
-    { name: "Profile & ID Card", href: "/dashboard/profile", icon: User },
-    { name: "Gym Booking", href: "/dashboard/gym", icon: Calendar },
-    { name: "Library Catalog", href: "/dashboard/library", icon: BookOpen },
-    { name: "Facility Bookings", href: "/dashboard/facilities", icon: Building },
-    { name: "Welfare Claims", href: "/dashboard/welfare", icon: HeartHandshake },
-    { name: "Invoices & Payments", href: "/dashboard/payments", icon: CreditCard },
-    { name: "Member Directory", href: "/dashboard/directory", icon: Users },
-    { name: "Documents", href: "/dashboard/documents", icon: FileText },
-    { name: "Portal Settings", href: "/dashboard/settings", icon: Settings },
+    { name: t("Overview", "Overview"), href: "/dashboard", icon: LayoutDashboard },
+    { name: t("Profile & ID Card", "Profile & ID Card"), href: "/dashboard/profile", icon: User },
+    { name: t("Gym Booking", "Gym Booking"), href: "/dashboard/gym", icon: Calendar },
+    { name: t("Library Catalog", "Library Catalog"), href: "/dashboard/library", icon: BookOpen },
+    { name: t("Facility Bookings", "Facility Bookings"), href: "/dashboard/facilities", icon: Building },
+    { name: t("Welfare Claims", "Welfare Claims"), href: "/dashboard/welfare", icon: HeartHandshake },
+    { name: t("Invoices & Payments", "Invoices & Payments"), href: "/dashboard/payments", icon: CreditCard },
+    { name: t("Member Directory", "Member Directory"), href: "/dashboard/directory", icon: Users },
+    { name: t("Documents", "Documents"), href: "/dashboard/documents", icon: FileText },
+    { name: t("Portal Settings", "Portal Settings"), href: "/dashboard/settings", icon: Settings },
   ];
 
   const unreadNotifs = notifications.filter(n => !n.read);
@@ -107,12 +107,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         >
           <Card className="border-border shadow-xl backdrop-blur-sm bg-card/90">
             <CardHeader className="space-y-2 text-center pb-6 border-b border-border">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg">
-                <Shield className="h-6 w-6 text-accent" />
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-card border border-border shadow-lg overflow-hidden">
+                <img
+                  src="/images/309563497_415511680752905_2210960597977463845_n.png"
+                  className="h-10 w-10 object-contain"
+                  alt="Metropolitan Police Association Logo"
+                />
               </div>
-              <CardTitle className="text-xl font-bold tracking-tight">Members Secure Login</CardTitle>
+              <CardTitle className="text-xl font-bold tracking-tight">{t("Members Secure Login", "Members Secure Login")}</CardTitle>
               <CardDescription className="text-2xs text-muted-foreground">
-                Access collective agreements, facilities booking, and member records securely.
+                {t("Access collective agreements, facilities booking, and member records securely.", "Access collective agreements, facilities booking, and member records securely.")}
               </CardDescription>
             </CardHeader>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -126,7 +130,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
                 {/* Badge Number */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="badgeNumber" className="text-xs font-semibold">Department Badge Number</Label>
+                  <Label htmlFor="badgeNumber" className="text-xs font-semibold">{t("Department Badge Number", "Department Badge Number")}</Label>
                   <Input
                     id="badgeNumber"
                     type="text"
@@ -143,7 +147,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
                 {/* Email Address */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="email" className="text-xs font-semibold">Officer Email Address</Label>
+                  <Label htmlFor="email" className="text-xs font-semibold">{t("Officer Email Address", "Officer Email Address")}</Label>
                   <Input
                     id="email"
                     type="email"
@@ -162,7 +166,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 {/* Password with toggle unmask */}
                 <div className="space-y-1.5">
                   <div className="flex justify-between items-center">
-                    <Label htmlFor="password" className="text-xs font-semibold">Security Password</Label>
+                    <Label htmlFor="password" className="text-xs font-semibold">{t("Security Password", "Security Password")}</Label>
                   </div>
                   <div className="relative">
                     <Input
@@ -195,10 +199,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   disabled={isSubmitting}
                   className="rounded-xl h-11 w-full bg-primary hover:bg-primary/95 text-primary-foreground font-semibold text-xs shadow-xl shadow-primary/20"
                 >
-                  {isSubmitting ? "Authenticating Secures..." : "Secure Login"}
+                  {isSubmitting ? t("Authenticating Secures...", "Authenticating Secures...") : t("Secure Login", "Secure Login")}
                 </Button>
                 <div className="text-center text-3xs text-muted-foreground">
-                  By logging in, you agree to the CJIS data security policies.
+                  {t("By logging in, you agree to the CJIS data security policies.", "By logging in, you agree to the CJIS data security policies.")}
                 </div>
               </CardFooter>
             </form>
@@ -215,8 +219,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Mobile Top Bar */}
       <div className="md:hidden flex h-16 w-full items-center justify-between border-b border-border bg-card px-4 sticky top-16 z-40">
         <div className="flex items-center gap-2">
-          <Shield className="h-5 w-5 text-accent" />
-          <span className="font-bold text-xs">Member Portal</span>
+          <img src="/images/309563497_415511680752905_2210960597977463845_n.png" className="h-6 w-6 object-contain" alt="Logo" />
+          <span className="font-bold text-xs">{t("Member Portal", "Member Portal")}</span>
         </div>
         <div className="flex items-center gap-2">
           {/* Mobile Notifications button */}
@@ -224,7 +228,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <Bell className="h-4.5 w-4.5 text-muted-foreground" />
             {unreadNotifs.length > 0 && (
               <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[9px] font-bold text-accent-foreground">
-                {unreadNotifs.length}
+                {language === "bn" ? translateDigits(String(unreadNotifs.length)) : unreadNotifs.length}
               </span>
             )}
           </Button>
@@ -274,7 +278,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-semibold text-accent hover:bg-accent/10"
               >
                 <ShieldAlert className="h-4.5 w-4.5 shrink-0" />
-                <span>Admin View (Presenter)</span>
+                <span>{t("Admin View (Presenter)", "Admin View (Presenter)")}</span>
               </Link>
               <Button
                 variant="ghost"
@@ -334,7 +338,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <Link href="/admin" className="block w-full">
             <Button variant="outline" className="w-full justify-start rounded-xl h-10 border-accent/20 bg-accent/5 text-accent text-3xs font-bold hover:bg-accent/15 gap-2 uppercase tracking-wide">
               <ShieldAlert className="h-4 w-4 text-accent animate-pulse" />
-              Presenter: Admin View
+              {t("Presenter: Admin View", "Presenter: Admin View")}
             </Button>
           </Link>
           <Button
@@ -343,7 +347,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             className="w-full justify-start rounded-xl h-10 text-destructive hover:bg-destructive/10 text-xs font-semibold gap-2"
           >
             <LogOut className="h-4.5 w-4.5 shrink-0" />
-            <span>Secure Logout</span>
+            <span>{t("Secure Logout", "Secure Logout")}</span>
           </Button>
         </div>
       </aside>
@@ -354,15 +358,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Desktop Top Header */}
         <header className="hidden md:flex h-16 w-full items-center justify-between border-b border-border bg-card px-8 sticky top-16 z-40 select-none">
           <div className="flex items-center gap-2">
-            <Shield className="h-5 w-5 text-accent" />
-            <h2 className="font-extrabold text-sm tracking-tight">Metropolitan Officer Portal</h2>
+            <img src="/images/309563497_415511680752905_2210960597977463845_n.png" className="h-6 w-6 object-contain" alt="Logo" />
+            <h2 className="font-extrabold text-sm tracking-tight">{t("Bangladesh Officer Portal", "Bangladesh Officer Portal")}</h2>
           </div>
 
           <div className="flex items-center gap-4 relative">
             {/* Quick stats details */}
             <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full border border-border bg-muted/30 text-3xs font-semibold text-muted-foreground uppercase tracking-wider">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>CI-Secured Link</span>
+              <span>{t("CI-Secured Link", "CI-Secured Link")}</span>
             </div>
 
             {/* Desktop Notifications Bell */}
@@ -376,7 +380,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <Bell className="h-4.5 w-4.5 text-muted-foreground" />
                 {unreadNotifs.length > 0 && (
                   <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[9px] font-bold text-accent-foreground">
-                    {unreadNotifs.length}
+                    {language === "bn" ? translateDigits(String(unreadNotifs.length)) : unreadNotifs.length}
                   </span>
                 )}
               </Button>
@@ -393,13 +397,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                       className="absolute right-0 mt-2 w-80 bg-card border border-border rounded-2xl shadow-xl z-50 p-4 space-y-3"
                     >
                       <div className="flex items-center justify-between border-b border-border pb-2">
-                        <span className="font-extrabold text-xs">Notifications</span>
-                        <span className="text-3xs text-muted-foreground font-semibold">({unreadNotifs.length} unread)</span>
+                        <span className="font-extrabold text-xs">{t("Notifications", "Notifications")}</span>
+                        <span className="text-3xs text-muted-foreground font-semibold">
+                          ({language === "bn" ? translateDigits(String(unreadNotifs.length)) : unreadNotifs.length} {t("unread", "unread")})
+                        </span>
                       </div>
                       
                       <div className="max-h-60 overflow-y-auto space-y-2 pr-1 scrollbar-thin">
                         {notifications.length === 0 ? (
-                          <div className="text-center py-6 text-2xs text-muted-foreground">No alerts at this time.</div>
+                          <div className="text-center py-6 text-2xs text-muted-foreground">{t("No alerts at this time.", "No alerts at this time.")}</div>
                         ) : (
                           notifications.map((notif) => (
                             <div
@@ -413,11 +419,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             >
                               <div className="flex items-center justify-between">
                                 <span className={`text-2xs font-extrabold ${notif.read ? "text-muted-foreground" : "text-foreground"}`}>
-                                  {notif.title}
+                                  {t(notif.title, notif.title)}
                                 </span>
                                 <span className="text-[9px] text-muted-foreground">{notif.date}</span>
                               </div>
-                              <p className="text-3xs text-muted-foreground mt-1 leading-normal">{notif.message}</p>
+                              <p className="text-3xs text-muted-foreground mt-1 leading-normal">{t(notif.message, notif.message)}</p>
                             </div>
                           ))
                         )}

@@ -17,10 +17,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Metropolitan Police Association | Serving & Protecting Our Community",
-  description: "Official web portal of the Metropolitan Police Association. Representing active and retired law enforcement officers, promoting public safety, and supporting our members.",
+  title: "Bangladesh Police Association | Serving & Protecting Our Community",
+  description: "Official web portal of the Bangladesh Police Association. Representing active and retired law enforcement officers, promoting public safety, and supporting our members.",
   keywords: ["police association", "law enforcement", "officer benefits", "police charity", "community safety"],
-  authors: [{ name: "Metropolitan Police Association" }],
+  authors: [{ name: "Bangladesh Police Association" }],
 };
 
 export default function RootLayout({

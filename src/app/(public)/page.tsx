@@ -22,42 +22,57 @@ const itemVariants: Variants = {
   visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
-const slides = [
-  {
-    image: "/images/slider_1.jpg",
-    title: "Honoring Service, Protecting Rights",
-    description: "Dedicated to representing the brave officers of the Metropolitan Police, advocating for fair benefits, safety, and legal security.",
-    tagline: "COMMUNITY REPRESENTATION",
-  },
-  {
-    image: "/images/slider_2.jpg",
-    title: "Unwavering Legal Protection 24/7",
-    description: "Our legal defense fund ensures that every active member has elite representation standing by in critical incidents.",
-    tagline: "CRITICAL INCIDENT DEFENSE",
-  },
-  {
-    image: "/images/slider_3.jpg",
-    title: "Empowering Officers and Families",
-    description: "Supporting officer well-being, mental health programs, and offering tuition scholarships for dependents.",
-    tagline: "WELFARE & MEMBER BENEFITS",
-  },
-  {
-    image: "/images/slider_4.jpg",
-    title: "Strategic Operations Briefings",
-    description: "Delivering timely administrative support, policy directives, and tactical guidelines to all divisions.",
-    tagline: "OPERATIONAL EXCELLENCE",
-  },
-  {
-    image: "/images/slider_5.jpg",
-    title: "Fostering Neighborhood Trust",
-    description: "Building strong bridges of trust and collaboration in our neighborhoods through community-led programs.",
-    tagline: "COMMUNITY PARTNERSHIP",
-  },
-];
-
 export default function Home() {
-  const { notices } = useDemo();
+  const { notices, t, language } = useDemo();
   const [currentSlide, setCurrentSlide] = React.useState(0);
+
+  const slides = [
+    {
+      image: "/images/slider_1.jpg",
+      title: t("Honoring Service, Protecting Rights", "Honoring Service, Protecting Rights"),
+      description: t(
+        "Dedicated to representing the brave officers of the Metropolitan Police, advocating for fair benefits, safety, and legal security.",
+        "Dedicated to representing the brave officers of the Metropolitan Police, advocating for fair benefits, safety, and legal security."
+      ),
+      tagline: t("COMMUNITY REPRESENTATION", "COMMUNITY REPRESENTATION"),
+    },
+    {
+      image: "/images/slider_2.jpg",
+      title: t("Unwavering Legal Protection 24/7", "Unwavering Legal Protection 24/7"),
+      description: t(
+        "Our legal defense fund ensures that every active member has elite representation standing by in critical incidents.",
+        "Our legal defense fund ensures that every active member has elite representation standing by in critical incidents."
+      ),
+      tagline: t("CRITICAL INCIDENT DEFENSE", "CRITICAL INCIDENT DEFENSE"),
+    },
+    {
+      image: "/images/slider_3.jpg",
+      title: t("Empowering Officers and Families", "Empowering Officers and Families"),
+      description: t(
+        "Supporting officer well-being, mental health programs, and offering tuition scholarships for dependents.",
+        "Supporting officer well-being, mental health programs, and offering tuition scholarships for dependents."
+      ),
+      tagline: t("WELFARE & MEMBER BENEFITS", "WELFARE & MEMBER BENEFITS"),
+    },
+    {
+      image: "/images/slider_4.jpg",
+      title: t("Strategic Operations Briefings", "Strategic Operations Briefings"),
+      description: t(
+        "Delivering timely administrative support, policy directives, and tactical guidelines to all divisions.",
+        "Delivering timely administrative support, policy directives, and tactical guidelines to all divisions."
+      ),
+      tagline: t("OPERATIONAL EXCELLENCE", "OPERATIONAL EXCELLENCE"),
+    },
+    {
+      image: "/images/slider_5.jpg",
+      title: t("Fostering Neighborhood Trust", "Fostering Neighborhood Trust"),
+      description: t(
+        "Building strong bridges of trust and collaboration in our neighborhoods through community-led programs.",
+        "Building strong bridges of trust and collaboration in our neighborhoods through community-led programs."
+      ),
+      tagline: t("COMMUNITY PARTNERSHIP", "COMMUNITY PARTNERSHIP"),
+    },
+  ];
 
   // Auto-play Image Slider
   React.useEffect(() => {
@@ -65,7 +80,7 @@ export default function Home() {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   const handlePrev = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
@@ -96,15 +111,15 @@ export default function Home() {
         `}</style>
         <div className="px-4 bg-[#05070e] h-full flex items-center border-r border-accent/30 z-10 shrink-0 text-3xs font-extrabold text-accent uppercase tracking-wider gap-1.5 shadow-[2px_0_5px_rgba(0,0,0,0.5)]">
           <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
-          <span>Active Bulletins</span>
+          <span>{t("Active Bulletins", "Active Bulletins")}</span>
         </div>
         <div className="flex-1 overflow-hidden relative">
           <div className="animate-marquee cursor-pointer flex gap-12 text-3xs font-bold text-white/80">
             {notices.map((notice) => (
               <span key={notice.id} className="hover:text-accent transition-colors flex items-center gap-1.5">
                 <span>•</span>
-                <span>[{notice.category}]</span>
-                <span>{notice.title} ({notice.date})</span>
+                <span>[{t(notice.category, notice.category)}]</span>
+                <span>{t(notice.title, notice.title)} ({notice.date})</span>
               </span>
             ))}
           </div>
@@ -158,12 +173,12 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
                 <Link href="/dashboard" className="w-full sm:w-auto">
                   <Button size="lg" className="w-full sm:w-auto rounded-xl px-8 h-12 bg-accent hover:bg-accent/90 text-accent-foreground font-extrabold text-xs shadow-xl shadow-accent/20">
-                    Access Members Portal
+                    {t("Access Members Portal", "Access Members Portal")}
                   </Button>
                 </Link>
                 <Link href="/about" className="w-full sm:w-auto">
                   <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-xl px-8 h-12 border-white/20 text-white text-xs font-bold hover:bg-white/10">
-                    About Our Association
+                    {t("About Our Association", "About Our Association")}
                   </Button>
                 </Link>
               </div>
@@ -231,14 +246,14 @@ export default function Home() {
               >
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight group-hover:text-primary transition-colors">
-                    {stat.number}
+                    {t(stat.number, stat.number)}
                   </span>
                   <div className="p-2 rounded-xl bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary transition-colors">
                     <stat.icon className="h-5 w-5" />
                   </div>
                 </div>
-                <h3 className="text-xs font-bold text-foreground tracking-wide uppercase">{stat.label}</h3>
-                <p className="text-2xs text-muted-foreground mt-1">{stat.desc}</p>
+                <h3 className="text-xs font-bold text-foreground tracking-wide uppercase">{t(stat.label, stat.label)}</h3>
+                <p className="text-2xs text-muted-foreground mt-1">{t(stat.desc, stat.desc)}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -249,10 +264,10 @@ export default function Home() {
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-background border-b border-border">
         <div className="container mx-auto max-w-7xl space-y-16">
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-accent">Core Pillars</h2>
-            <p className="text-3xl font-extrabold sm:text-4xl tracking-tight">Our Mission & Values</p>
+            <h2 className="text-xs font-bold uppercase tracking-widest text-accent">{t("Core Pillars", "Core Pillars")}</h2>
+            <p className="text-3xl font-extrabold sm:text-4xl tracking-tight">{t("Our Mission & Values", "Our Mission & Values")}</p>
             <p className="text-sm text-muted-foreground">
-              We stand firm on key values that define our leadership, community outreach, and advocacy.
+              {t("We stand firm on key values that define our leadership, community outreach, and advocacy.", "We stand firm on key values that define our leadership, community outreach, and advocacy.")}
             </p>
           </div>
 
@@ -289,8 +304,8 @@ export default function Home() {
                 <div className="inline-flex p-3 rounded-2xl bg-muted text-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 mb-6 shadow-inner">
                   <pillar.icon className="h-6 w-6" />
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-3">{pillar.title}</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">{pillar.desc}</p>
+                <h3 className="text-lg font-bold text-foreground mb-3">{t(pillar.title, pillar.title)}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">{t(pillar.desc, pillar.desc)}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -306,25 +321,25 @@ export default function Home() {
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8 space-y-4 text-left">
               <span className="text-2xs font-bold uppercase tracking-wider text-accent bg-accent/10 px-2.5 py-1 rounded-md border border-accent/20">
-                Join the Network
+                {t("Join the Network", "Join the Network")}
               </span>
               <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                Are you a Metropolitan Officer?
+                {t("Are you a Bangladesh Police Officer?", "Are you a Bangladesh Police Officer?")}
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                Unlock full access to member directory, contract downloads, legal representation request tools, and updates on executive board meetings.
+                {t("Unlock full access to member directory, contract downloads, legal representation request tools, and updates on executive board meetings.", "Unlock full access to member directory, contract downloads, legal representation request tools, and updates on executive board meetings.")}
               </p>
             </div>
             
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 w-full">
               <Link href="/dashboard" className="w-full">
                 <Button className="w-full rounded-xl h-11 bg-primary hover:bg-primary/95 text-primary-foreground font-semibold text-xs shadow-md">
-                  Register For Access
+                  {t("Register For Access", "Register For Access")}
                 </Button>
               </Link>
               <Link href="/news" className="w-full">
                 <Button variant="outline" className="w-full rounded-xl h-11 border-border text-xs font-semibold flex items-center justify-center gap-1.5">
-                  Read Association FAQs
+                  {t("Read Association FAQs", "Read Association FAQs")}
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </Link>

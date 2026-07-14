@@ -42,7 +42,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Mobile Header */}
       <div className="md:hidden flex h-16 w-full items-center justify-between border-b border-border bg-[#0a0f1d] text-white px-4 sticky top-16 z-40">
         <div className="flex items-center gap-2">
-          <Shield className="h-5 w-5 text-accent" />
+          <img src="/images/309563497_415511680752905_2210960597977463845_n.png" className="h-6 w-6 object-contain" alt="Logo" />
           <span className="font-extrabold text-xs uppercase tracking-wider text-accent">Admin Portal</span>
         </div>
         <Button
@@ -109,8 +109,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* User Card */}
         <div className="p-5 border-b border-white/10 bg-[#060a14]">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 bg-accent/15 rounded-2xl flex items-center justify-center border border-accent/25 shadow-inner">
-              <Shield className="h-5 w-5 text-accent animate-pulse" />
+            <div className="h-10 w-10 bg-card rounded-2xl flex items-center justify-center border border-white/10 shadow-inner overflow-hidden">
+              <img src="/images/309563497_415511680752905_2210960597977463845_n.png" className="h-8 w-8 object-contain" alt="Logo" />
             </div>
             <div className="flex flex-col min-w-0 text-left">
               <span className="font-extrabold text-xs text-white">Portal Administrator</span>
@@ -167,7 +167,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Desktop Top Header */}
         <header className="hidden md:flex h-16 w-full items-center justify-between border-b border-border bg-card px-8 sticky top-16 z-40 select-none">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="h-5 w-5 text-accent" />
+            <img src="/images/309563497_415511680752905_2210960597977463845_n.png" className="h-6 w-6 object-contain" alt="Logo" />
             <h2 className="font-extrabold text-sm tracking-tight text-foreground uppercase">Executive Administration Dashboard</h2>
           </div>
 

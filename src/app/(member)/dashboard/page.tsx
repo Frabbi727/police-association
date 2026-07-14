@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useDemo } from "@/lib/demo-context";
+import { useDemo, translateDigits } from "@/lib/demo-context";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,9 +13,6 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  BarChart,
-  Bar,
-  CartesianGrid,
   Legend
 } from "recharts";
 import {
@@ -25,11 +22,8 @@ import {
   BookOpen,
   HeartHandshake,
   Bell,
-  ArrowUpRight,
   TrendingUp,
-  Clock,
-  CheckCircle,
-  AlertTriangle
+  Clock
 } from "lucide-react";
 
 export default function MemberDashboardOverview() {
@@ -41,7 +35,10 @@ export default function MemberDashboardOverview() {
     facilityBookings,
     invoices,
     notifications,
-    announcements
+    announcements,
+    t,
+    formatCurrency,
+    language
   } = useDemo();
 
   // Computations
@@ -53,13 +50,13 @@ export default function MemberDashboardOverview() {
   
   // Charts Dummy Data
   const activityData = [
-    { name: "Jan", GymHours: 12, BooksRead: 1, ClaimsSubmitted: 0 },
-    { name: "Feb", GymHours: 18, BooksRead: 2, ClaimsSubmitted: 1 },
-    { name: "Mar", GymHours: 15, BooksRead: 1, ClaimsSubmitted: 0 },
-    { name: "Apr", GymHours: 24, BooksRead: 3, ClaimsSubmitted: 0 },
-    { name: "May", GymHours: 30, BooksRead: 4, ClaimsSubmitted: 1 },
-    { name: "Jun", GymHours: 22, BooksRead: 2, ClaimsSubmitted: 0 },
-    { name: "Jul", GymHours: 28, BooksRead: 3, ClaimsSubmitted: 1 },
+    { name: t("Jan", "Jan"), GymHours: 12, BooksRead: 1, ClaimsSubmitted: 0 },
+    { name: t("Feb", "Feb"), GymHours: 18, BooksRead: 2, ClaimsSubmitted: 1 },
+    { name: t("Mar", "Mar"), GymHours: 15, BooksRead: 1, ClaimsSubmitted: 0 },
+    { name: t("Apr", "Apr"), GymHours: 24, BooksRead: 3, ClaimsSubmitted: 0 },
+    { name: t("May", "May"), GymHours: 30, BooksRead: 4, ClaimsSubmitted: 1 },
+    { name: t("Jun", "Jun"), GymHours: 22, BooksRead: 2, ClaimsSubmitted: 0 },
+    { name: t("Jul", "Jul"), GymHours: 28, BooksRead: 3, ClaimsSubmitted: 1 },
   ];
 
   return (
@@ -67,13 +64,17 @@ export default function MemberDashboardOverview() {
       {/* Welcome Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight">Welcome Back, {user?.name.split(" ")[1] || "Officer"}</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight">
+            {t("Welcome Back, ", "Welcome Back, ")}
+            {user?.name.split(" ")[1] || "Officer"}
+          </h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Portal Overview for Badge #{user?.badgeNumber} • {user?.division}
+            {t("Portal Overview for Badge #", "Portal Overview for Badge #")}
+            {language === "bn" ? translateDigits(user?.badgeNumber || "") : user?.badgeNumber} • {t(user?.division || "", user?.division || "")}
           </p>
         </div>
         <div className="text-3xs font-semibold px-3 py-1 bg-accent/10 border border-accent/20 rounded-full text-accent uppercase tracking-wider self-start sm:self-center">
-          Status: Active Association Member
+          {t("Status: Active Association Member", "Status: Active Association Member")}
         </div>
       </div>
 
@@ -84,9 +85,9 @@ export default function MemberDashboardOverview() {
         <Card className="border-border bg-card/60 hover:shadow-md transition-shadow">
           <CardContent className="p-5 flex items-center justify-between">
             <div className="space-y-2">
-              <span className="text-3xs font-extrabold uppercase text-muted-foreground tracking-wider">Membership</span>
-              <h3 className="text-base font-extrabold text-foreground leading-none">Active</h3>
-              <p className="text-4xs text-muted-foreground">Badge Verification Code</p>
+              <span className="text-3xs font-extrabold uppercase text-muted-foreground tracking-wider">{t("Membership", "Membership")}</span>
+              <h3 className="text-base font-extrabold text-foreground leading-none">{t("Active", "Active")}</h3>
+              <p className="text-4xs text-muted-foreground">{t("Badge Verification Code", "Badge Verification Code")}</p>
             </div>
             <div className="p-3 bg-primary/10 text-primary rounded-xl">
               <Shield className="h-5 w-5 text-accent" />
@@ -98,11 +99,13 @@ export default function MemberDashboardOverview() {
         <Card className="border-border bg-card/60 hover:shadow-md transition-shadow">
           <CardContent className="p-5 flex items-center justify-between">
             <div className="space-y-2">
-              <span className="text-3xs font-extrabold uppercase text-muted-foreground tracking-wider">Due Amount</span>
+              <span className="text-3xs font-extrabold uppercase text-muted-foreground tracking-wider">{t("Due Amount", "Due Amount")}</span>
               <h3 className="text-base font-extrabold text-foreground leading-none">
-                ${unpaidTotal.toLocaleString()}
+                {formatCurrency(unpaidTotal)}
               </h3>
-              <p className="text-4xs text-muted-foreground">{unpaidInvoices.length} Unpaid Invoice(s)</p>
+              <p className="text-4xs text-muted-foreground">
+                {language === "bn" ? translateDigits(String(unpaidInvoices.length)) : unpaidInvoices.length} {t("Unpaid Invoice(s)", "Unpaid Invoice(s)")}
+              </p>
             </div>
             <div className="p-3 bg-primary/10 text-primary rounded-xl">
               <CreditCard className="h-5 w-5 text-primary" />
@@ -114,12 +117,20 @@ export default function MemberDashboardOverview() {
         <Card className="border-border bg-card/60 hover:shadow-md transition-shadow">
           <CardContent className="p-5 flex items-center justify-between">
             <div className="space-y-2">
-              <span className="text-3xs font-extrabold uppercase text-muted-foreground tracking-wider">Gym Slots</span>
+              <span className="text-3xs font-extrabold uppercase text-muted-foreground tracking-wider">{t("Gym Slots", "Gym Slots")}</span>
               <h3 className="text-base font-extrabold text-foreground leading-none">
-                {userGymBookings.length > 0 ? `${userGymBookings.length} Active` : "None"}
+                {userGymBookings.length > 0 ? (
+                  `${language === "bn" ? translateDigits(String(userGymBookings.length)) : userGymBookings.length} ${t("Active", "Active")}`
+                ) : (
+                  t("None", "None")
+                )}
               </h3>
               <p className="text-4xs text-muted-foreground truncate max-w-[120px]">
-                {userGymBookings[0] ? `${userGymBookings[0].day} @ ${userGymBookings[0].slot.split(" - ")[0]}` : "No upcoming slots"}
+                {userGymBookings[0] ? (
+                  `${t(userGymBookings[0].day, userGymBookings[0].day)} @ ${language === "bn" ? translateDigits(userGymBookings[0].slot.split(" - ")[0]) : userGymBookings[0].slot.split(" - ")[0]}`
+                ) : (
+                  t("No upcoming slots", "No upcoming slots")
+                )}
               </p>
             </div>
             <div className="p-3 bg-primary/10 text-primary rounded-xl">
@@ -132,12 +143,12 @@ export default function MemberDashboardOverview() {
         <Card className="border-border bg-card/60 hover:shadow-md transition-shadow">
           <CardContent className="p-5 flex items-center justify-between">
             <div className="space-y-2">
-              <span className="text-3xs font-extrabold uppercase text-muted-foreground tracking-wider">Books Borrowed</span>
+              <span className="text-3xs font-extrabold uppercase text-muted-foreground tracking-wider">{t("Books Borrowed", "Books Borrowed")}</span>
               <h3 className="text-base font-extrabold text-foreground leading-none">
-                {userBooks.length} Books
+                {language === "bn" ? translateDigits(String(userBooks.length)) : userBooks.length} {t("Books", "Books")}
               </h3>
               <p className="text-4xs text-muted-foreground truncate max-w-[120px]">
-                {userBooks[0] ? `Due: ${userBooks[0].dueDate}` : "Zero borrowed items"}
+                {userBooks[0] ? `Due: ${userBooks[0].dueDate}` : t("Zero borrowed items", "Zero borrowed items")}
               </p>
             </div>
             <div className="p-3 bg-primary/10 text-primary rounded-xl">
@@ -150,11 +161,13 @@ export default function MemberDashboardOverview() {
         <Card className="border-border bg-card/60 hover:shadow-md transition-shadow sm:col-span-2 lg:col-span-1">
           <CardContent className="p-5 flex items-center justify-between">
             <div className="space-y-2">
-              <span className="text-3xs font-extrabold uppercase text-muted-foreground tracking-wider">Welfare Claims</span>
+              <span className="text-3xs font-extrabold uppercase text-muted-foreground tracking-wider">{t("Welfare Claims", "Welfare Claims")}</span>
               <h3 className="text-base font-extrabold text-foreground leading-none">
-                {userWelfare.filter(w => w.status === "Pending").length} Pending
+                {language === "bn" ? translateDigits(String(userWelfare.filter(w => w.status === "Pending").length)) : userWelfare.filter(w => w.status === "Pending").length} {t("Pending", "Pending")}
               </h3>
-              <p className="text-4xs text-muted-foreground">Total claims: {userWelfare.length}</p>
+              <p className="text-4xs text-muted-foreground">
+                {t("Total claims", "Total claims")}: {language === "bn" ? translateDigits(String(userWelfare.length)) : userWelfare.length}
+              </p>
             </div>
             <div className="p-3 bg-primary/10 text-primary rounded-xl">
               <HeartHandshake className="h-5 w-5 text-primary" />
@@ -167,10 +180,10 @@ export default function MemberDashboardOverview() {
       {/* Quick Actions Panel */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: "Book Gym Slot", href: "/dashboard/gym", icon: Calendar, color: "text-accent border-accent/25 bg-accent/5 hover:bg-accent/10" },
-          { label: "Borrow Books", href: "/dashboard/library", icon: BookOpen, color: "text-primary border-primary/25 bg-primary/5 hover:bg-primary/10" },
-          { label: "Reserve Facilities", href: "/dashboard/facilities", icon: Calendar, color: "text-primary border-primary/25 bg-primary/5 hover:bg-primary/10" },
-          { label: "Apply for Welfare", href: "/dashboard/welfare", icon: HeartHandshake, color: "text-primary border-primary/25 bg-primary/5 hover:bg-primary/10" },
+          { label: t("Book Gym Slot", "Book Gym Slot"), href: "/dashboard/gym", icon: Calendar, color: "text-accent border-accent/25 bg-accent/5 hover:bg-accent/10" },
+          { label: t("Borrow Books", "Borrow Books"), href: "/dashboard/library", icon: BookOpen, color: "text-primary border-primary/25 bg-primary/5 hover:bg-primary/10" },
+          { label: t("Reserve Facilities", "Reserve Facilities"), href: "/dashboard/facilities", icon: Calendar, color: "text-primary border-primary/25 bg-primary/5 hover:bg-primary/10" },
+          { label: t("Apply for Welfare", "Apply for Welfare"), href: "/dashboard/welfare", icon: HeartHandshake, color: "text-primary border-primary/25 bg-primary/5 hover:bg-primary/10" },
         ].map((act, idx) => (
           <Link key={idx} href={act.href} className="block w-full">
             <Button variant="outline" className={`w-full h-14 rounded-2xl flex flex-col items-center justify-center gap-1 border font-bold text-xs ${act.color}`}>
@@ -192,10 +205,10 @@ export default function MemberDashboardOverview() {
                 <div>
                   <CardTitle className="text-sm font-bold flex items-center gap-1.5">
                     <TrendingUp className="h-4 w-4 text-accent" />
-                    Member Activity Log
+                    {t("Member Activity Log", "Member Activity Log")}
                   </CardTitle>
                   <CardDescription className="text-3xs">
-                    Overview of your service engagement, gym bookings, and checked out resources.
+                    {t("Overview of your service engagement, gym bookings, and checked out resources.", "Overview of your service engagement, gym bookings, and checked out resources.")}
                   </CardDescription>
                 </div>
               </div>
@@ -217,8 +230,8 @@ export default function MemberDashboardOverview() {
                   <YAxis fontSize={11} stroke="oklch(0.45 0.05 240)"/>
                   <Tooltip contentStyle={{ fontSize: '11px', borderRadius: '12px', border: '1px solid oklch(0.88 0.02 240)' }} />
                   <Legend wrapperStyle={{ fontSize: '11px' }} />
-                  <Area type="monotone" dataKey="GymHours" name="Gym Hours Logged" stroke="oklch(0.35 0.12 245)" fillOpacity={1} fill="url(#gymColor)" strokeWidth={2} />
-                  <Area type="monotone" dataKey="BooksRead" name="Library Borrowings" stroke="oklch(0.76 0.15 75)" fillOpacity={1} fill="url(#bookColor)" strokeWidth={2} />
+                  <Area type="monotone" dataKey="GymHours" name={t("Gym Hours Logged", "Gym Hours Logged")} stroke="oklch(0.35 0.12 245)" fillOpacity={1} fill="url(#gymColor)" strokeWidth={2} />
+                  <Area type="monotone" dataKey="BooksRead" name={t("Library Borrowings", "Library Borrowings")} stroke="oklch(0.76 0.15 75)" fillOpacity={1} fill="url(#bookColor)" strokeWidth={2} />
                 </AreaChart>
               </ResponsiveContainer>
             </CardContent>
@@ -231,21 +244,21 @@ export default function MemberDashboardOverview() {
             <CardHeader className="pb-2 border-b border-border shrink-0">
               <CardTitle className="text-sm font-bold flex items-center gap-1.5">
                 <Bell className="h-4.5 w-4.5 text-accent animate-pulse" />
-                Latest Announcements
+                {t("Latest Announcements", "Latest Announcements")}
               </CardTitle>
               <CardDescription className="text-3xs">
-                Official releases and updates from the executive committee.
+                {t("Official releases and updates from the executive committee.", "Official releases and updates from the executive committee.")}
               </CardDescription>
             </CardHeader>
             <CardContent className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin">
               {announcements.map((ann) => (
                 <div key={ann.id} className="p-3 border border-border/50 bg-muted/20 rounded-xl space-y-1.5">
                   <div className="flex items-center justify-between text-4xs font-bold text-accent uppercase tracking-wider">
-                    <span>{ann.sender}</span>
+                    <span>{t(ann.sender, ann.sender)}</span>
                     <span className="text-muted-foreground">{ann.date}</span>
                   </div>
-                  <h4 className="font-extrabold text-2xs text-foreground leading-snug">{ann.title}</h4>
-                  <p className="text-3xs text-muted-foreground leading-normal">{ann.content}</p>
+                  <h4 className="font-extrabold text-2xs text-foreground leading-snug">{t(ann.title, ann.title)}</h4>
+                  <p className="text-3xs text-muted-foreground leading-normal">{t(ann.content, ann.content)}</p>
                 </div>
               ))}
             </CardContent>
@@ -260,39 +273,39 @@ export default function MemberDashboardOverview() {
         {/* Welfare applications status tracker */}
         <Card className="border-border">
           <CardHeader className="border-b border-border pb-3">
-            <CardTitle className="text-sm font-bold">Welfare Claim Tracker</CardTitle>
-            <CardDescription className="text-3xs">Live status updates on your submitted welfare grants.</CardDescription>
+            <CardTitle className="text-sm font-bold">{t("Welfare Claim Tracker", "Welfare Claim Tracker")}</CardTitle>
+            <CardDescription className="text-3xs">{t("Live status updates on your submitted welfare grants.", "Live status updates on your submitted welfare grants.")}</CardDescription>
           </CardHeader>
           <CardContent className="p-4 space-y-4">
             {userWelfare.length === 0 ? (
-              <div className="text-center py-8 text-2xs text-muted-foreground">No submitted welfare applications.</div>
+              <div className="text-center py-8 text-2xs text-muted-foreground">{t("No submitted welfare applications.", "No submitted welfare applications.")}</div>
             ) : (
               userWelfare.map((app) => (
                 <div key={app.id} className="p-4 rounded-2xl border border-border bg-card/40 space-y-3">
                   <div className="flex justify-between items-center">
                     <div>
-                      <h4 className="font-bold text-xs">{app.type}</h4>
-                      <p className="text-4xs text-muted-foreground">ID: {app.id} • Submitted: {app.date}</p>
+                      <h4 className="font-bold text-xs">{t(app.type, app.type)}</h4>
+                      <p className="text-4xs text-muted-foreground">ID: {app.id} • {t("Date", "Date")}: {app.date}</p>
                     </div>
                     <span className={`text-4xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${
                       app.status === "Approved" ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20" :
                       app.status === "Rejected" ? "bg-red-500/10 text-red-500 border border-red-500/20" :
                       "bg-amber-500/10 text-amber-500 border border-amber-500/20"
                     }`}>
-                      {app.status}
+                      {t(app.status, app.status)}
                     </span>
                   </div>
                   <div className="border-t border-border/50 pt-2 flex items-center justify-between text-3xs">
-                    <span className="text-muted-foreground">Amount Requested:</span>
-                    <span className="font-bold text-foreground">${app.amount.toLocaleString()}</span>
+                    <span className="text-muted-foreground">{t("Amount Requested", "Amount Requested")}:</span>
+                    <span className="font-bold text-foreground">{formatCurrency(app.amount)}</span>
                   </div>
                   {/* Latest timeline activity */}
                   {app.timeline.length > 0 && (
                     <div className="p-2.5 rounded-xl bg-muted/30 border border-border/30 flex gap-2 items-start text-3xs">
                       <Clock className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" />
                       <div>
-                        <span className="font-bold text-foreground">Latest Update: </span>
-                        <span className="text-muted-foreground">{app.timeline[app.timeline.length - 1].comment}</span>
+                        <span className="font-bold text-foreground">{t("Latest Update", "Latest Update")}: </span>
+                        <span className="text-muted-foreground">{t(app.timeline[app.timeline.length - 1].comment, app.timeline[app.timeline.length - 1].comment)}</span>
                       </div>
                     </div>
                   )}
@@ -305,21 +318,21 @@ export default function MemberDashboardOverview() {
         {/* Facility Bookings Status */}
         <Card className="border-border">
           <CardHeader className="border-b border-border pb-3">
-            <CardTitle className="text-sm font-bold">Facility Booking History</CardTitle>
-            <CardDescription className="text-3xs">Bookings for community halls, guest rooms, and spaces.</CardDescription>
+            <CardTitle className="text-sm font-bold">{t("Facility Booking History", "Facility Booking History")}</CardTitle>
+            <CardDescription className="text-3xs">{t("Bookings for community halls, guest rooms, and spaces.", "Bookings for community halls, guest rooms, and spaces.")}</CardDescription>
           </CardHeader>
           <CardContent className="p-4 space-y-4">
             {facilityBookings.length === 0 ? (
-              <div className="text-center py-8 text-2xs text-muted-foreground">No facility reservations booked.</div>
+              <div className="text-center py-8 text-2xs text-muted-foreground">{t("No facility reservations booked.", "No facility reservations booked.")}</div>
             ) : (
               facilityBookings.map((bk) => (
                 <div key={bk.id} className="p-4 rounded-2xl border border-border bg-card/40 flex justify-between items-center">
                   <div className="space-y-1">
-                    <h4 className="font-bold text-xs text-foreground">{bk.facility}</h4>
+                    <h4 className="font-bold text-xs text-foreground">{t(bk.facility, bk.facility)}</h4>
                     <div className="flex gap-2 text-4xs text-muted-foreground font-semibold uppercase tracking-wider">
-                      <span>Date: {bk.date}</span>
+                      <span>{t("Date", "Date")}: {language === "bn" ? translateDigits(bk.date) : bk.date}</span>
                       <span>•</span>
-                      <span>Duration: {bk.duration}</span>
+                      <span>{t("Duration", "Duration")}: {t(bk.duration, bk.duration)}</span>
                     </div>
                   </div>
                   <div className="flex flex-col items-end gap-1.5">
@@ -328,9 +341,9 @@ export default function MemberDashboardOverview() {
                       bk.status === "Cancelled" ? "bg-red-500/10 text-red-500 border border-red-500/20" :
                       "bg-amber-500/10 text-amber-500 border border-amber-500/20"
                     }`}>
-                      {bk.status}
+                      {t(bk.status, bk.status)}
                     </span>
-                    <span className="text-2xs font-extrabold">${bk.amount}</span>
+                    <span className="text-2xs font-extrabold">{formatCurrency(bk.amount)}</span>
                   </div>
                 </div>
               ))

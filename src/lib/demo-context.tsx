@@ -107,6 +107,12 @@ interface DemoContextType {
   invoices: Invoice[];
   notifications: NotificationItem[];
   
+  // Translation
+  language: "en" | "bn";
+  toggleLanguage: () => void;
+  t: (key: string, englishDefault: string) => string;
+  formatCurrency: (amount: number) => string;
+  
   // Actions
   login: (badge: string, email: string, password: string) => Promise<boolean>;
   logout: () => void;
@@ -233,6 +239,144 @@ const defaultNotifications: NotificationItem[] = [
   { id: "NTF-04", date: "2026-07-05", title: "Welfare Claim WF-908 Approved", message: "Your Medical Grant request of $1,500 has been approved.", read: true, category: "success" },
 ];
 
+const digitsMap: Record<string, string> = {
+  "0": "০", "1": "১", "2": "২", "3": "৩", "4": "৪",
+  "5": "৫", "6": "৬", "7": "৭", "8": "৮", "9": "৯"
+};
+
+export function translateDigits(numStr: string): string {
+  return numStr.replace(/\d/g, (char) => digitsMap[char] || char);
+}
+
+const translationDict: Record<string, string> = {
+  // Navigation links
+  "Home": "হোম",
+  "About Us": "আমাদের সম্পর্কে",
+  "News & FAQ": "সংবাদ ও প্রশ্নোত্তর",
+  "Contact": "যোগাযোগ",
+  "Members Portal": "সদস্য পোর্টাল",
+  "Portal Dashboard": "পোর্টাল ড্যাশবোর্ড",
+  "Admin View": "অ্যাডমিন ভিউ",
+  "Portal Login": "পোর্টাল লগইন",
+  "Support Us": "আমাদের সমর্থন করুন",
+  "Logout": "লগআউট",
+  "Secure Logout": "নিরাপদ লগআউট",
+  "Exit Admin Portal": "অ্যাডমিন পোর্টাল থেকে প্রস্থান",
+  "Presenter: Admin View": "উপস্থাপক: অ্যাডমিন ভিউ",
+  
+  // Sidebar links
+  "Overview": "সারসংক্ষেপ",
+  "Profile & ID Card": "প্রোফাইল ও আইডি কার্ড",
+  "Gym Booking": "জিম বুকিং",
+  "Library Catalog": "লাইব্রেরি ক্যাটালগ",
+  "Facility Bookings": "সুবিধা বুকিং",
+  "Welfare Claims": "কল্যাণমূলক দাবি",
+  "Invoices & Payments": "ইনভয়েস ও পেমেন্ট",
+  "Member Directory": "সদস্য ডিরেক্টরি",
+  "Documents": "নথিপত্র",
+  "Portal Settings": "পোর্টাল সেটিংস",
+  "System Settings": "সিস্টেম সেটিংস",
+  "Members Log": "সদস্য লগ",
+  "Welfare Claims Review": "কল্যাণ দাবি পর্যালোচনা",
+  "Payments Log": "পেমেন্ট লগ",
+
+  // Common UI states / labels
+  "Active": "সক্রিয়",
+  "Retired": "অবসরপ্রাপ্ত",
+  "Suspended": "সাময়িক বরখাস্ত",
+  "Pending": "অপেক্ষমান",
+  "Approved": "অনুমোদিত",
+  "Rejected": "প্রত্যাখ্যাত",
+  "Cancelled": "বাতিলকৃত",
+  "Paid": "পরিশোধিত",
+  "Unpaid": "অপরিশোধিত",
+  "Borrowed": "ধারকৃত",
+  "Available": "সহলভ্য",
+  
+  "Badge Number": "ব্যাজ নম্বর",
+  "Email Address": "ইমেইল ঠিকানা",
+  "Password": "পাসওয়ার্ড",
+  "Department Badge Number": "বিভাগীয় ব্যাজ নম্বর",
+  "Officer Email Address": "অফিসার ইমেইল ঠিকানা",
+  "Security Password": "নিরাপত্তা পাসওয়ার্ড",
+  "Secure Login": "নিরাপদ লগইন",
+  "Update Profile Details": "প্রোফাইল আপডেট করুন",
+  "Change Password": "পাসওয়ার্ড পরিবর্তন করুন",
+  "Full Name": "পূর্ণ নাম",
+  "Contact Phone": "যোগাযোগ ফোন",
+  "Department Email": "বিভাগীয় ইমেইল",
+  "Save Changes": "পরিবর্তন সংরক্ষণ করুন",
+  "Pay Invoice": "পরিশোধ করুন",
+  "Due Amount": "বকেয়া পরিমাণ",
+  "Welfare Claim Tracker": "কল্যাণ দাবি ট্র্যাকার",
+  "Facility Booking History": "সুবিধা বুকিং ইতিহাস",
+  "Active Loans": "সক্রিয় ধারসমূহ",
+  "Active Reservations": "সক্রিয় বুকিংসমূহ",
+  
+  "COMMUNITY REPRESENTATION": "জনসাধারণের প্রতিনিধিত্ব",
+  "CRITICAL INCIDENT DEFENSE": "জরুরী আইনী সুরক্ষা",
+  "WELFARE & MEMBER BENEFITS": "কল্যাণ ও সদস্য সুবিধা",
+  "OPERATIONAL EXCELLENCE": "কার্যক্রম পরিচালনা উৎকর্ষ",
+  "COMMUNITY PARTNERSHIP": "কমিউনিটি অংশীদারিত্ব",
+  "Access Members Portal": "পোর্টাল প্রবেশ করুন",
+  "About Our Association": "আমাদের সম্পর্কে জানুন",
+  "Read Association FAQs": "এসোসিয়েশন প্রশ্নোত্তর পড়ুন",
+  "Bangladesh": "বাংলাদেশ",
+  "Bangladesh Officer Portal": "বাংলাদেশ পুলিশ কর্মকর্তা পোর্টাল",
+  "Are you a Bangladesh Police Officer?": "আপনি কি একজন বাংলাদেশ পুলিশ কর্মকর্তা?",
+  "Unlock full access to member directory, contract downloads, legal representation request tools, and updates on executive board meetings.": "সদস্য ডিরেক্টরি, চুক্তি ডাউনলোড, আইনী সহায়তার অনুরোধের সরঞ্জাম এবং নির্বাহী বোর্ডের সভার আপডেটের পূর্ণ অ্যাক্সেস আনলক করুন।",
+  "Register For Access": "নিবন্ধন করুন",
+  "Active Bulletins": "সক্রিয় বুলেটিন",
+  "Summer Family Picnic RSVP Extended": "গ্রীষ্মকালীন বনভোজনের সময় বর্ধিত",
+  "New Gym Equipment Installed": "নতুন জিম সরঞ্জাম স্থাপন",
+  "Legal Council Advisory: Off-Duty Conduct": "আইনি কাউন্সিলের পরামর্শ: ডিউটি বহির্ভূত আচরণ",
+  "Members Secure Login": "সদস্যদের নিরাপদ লগইন",
+  "Access collective agreements, facilities booking, and member records securely.": "যৌথ চুক্তি, সুযোগ-সুবিধা বুকিং এবং সদস্যের রেকর্ড নিরাপদে অ্যাক্সেস করুন।",
+  "Authenticating Secures...": "নিরাপদ প্রমাণীকরণ করা হচ্ছে...",
+  "Verification failed. Please check badge or email.": "যাচাইকরণ ব্যর্থ হয়েছে। অনুগ্রহ করে ব্যাজ বা ইমেইল চেক করুন।",
+  "An unexpected error occurred during secure authentication.": "নিরাপদ প্রমাণীকরণের সময় একটি অপ্রত্যাশিত ত্রুটি ঘটেছে।",
+  "Member Portal": "সদস্য পোর্টাল",
+  "Admin View (Presenter)": "অ্যাডমিন ভিউ (উপস্থাপক)",
+  "Exit Portal": "পোর্টাল থেকে প্রস্থান",
+  "5,200+": "৫,২০০+",
+  "35+": "৩৫+",
+  "$2.4M+": "২.৪ মিলিয়ন+ টাকা",
+  "100%": "১০০%",
+  "Active Members": "সক্রিয় সদস্য",
+  "Years of Service": "বছরের সেবা",
+  "Raised for Charity": "দাতব্য তহবিলে সাহায্য",
+  "Legal Coverage": "আইনি সেবা কভারেজ",
+  "Officers & retired staff": "কর্মকর্তা ও অবসরপ্রাপ্ত কর্মী",
+  "Dedicated advocacy": "উৎসর্গীকৃত সমর্থন",
+  "Support for families": "পারিবারিক সাহায্য তহবিল",
+  "Full legal protection": "সম্পূর্ণ আইনি সুরক্ষা",
+  "Community Hall": "কমিউনিটি হল",
+  "Guest House Suite A": "গেস্ট হাউস স্যুট এ",
+  "Guest House Suite B": "গেস্ট হাউস স্যুট বি",
+  "Tactical Training Room": "ট্যাকটিক্যাল ট্রেনিং রুম",
+  "1 Day": "১ দিন",
+  "2 Days": "২ দিন",
+  "3 Days": "৩ দিন",
+  "4 Hours": "৪ ঘন্টা",
+  "8 Hours": "৮ ঘন্টা",
+  "Book Gym Slot": "জিম স্লট বুক করুন",
+  "Borrow Books": "বই ধার করুন",
+  "Reserve Facilities": "সুযোগ-সুবিধা বুক করুন",
+  "Apply for Welfare": "কল্যাণের জন্য আবেদন করুন",
+  "Member Activity Log": "সদস্যের কার্যকলাপ লগ",
+  "Overview of your service engagement, gym bookings, and checked out resources.": "আপনার সেবামূলক ব্যস্ততা, জিম বুকিং এবং ধারকৃত উপকরণের সংক্ষিপ্ত বিবরণ।",
+  "Gym Hours Logged": "জিম সময় (ঘণ্টা)",
+  "Library Borrowings": "লাইব্রেরি ধারসমূহ",
+  "Latest Announcements": "সাম্প্রতিক ঘোষণা",
+  "Official releases and updates from the executive committee.": "নির্বাহী কমিটির অফিসিয়াল বিজ্ঞপ্তি এবং আপডেটসমূহ।",
+  "No submitted welfare applications.": "কোনো দাখিলকৃত কল্যাণ আবেদন নেই।",
+  "No facility reservations booked.": "কোনো সুযোগ-সুবিধা সংরক্ষণ নেই।",
+  "Date": "তারিখ",
+  "Duration": "স্থিতিকাল",
+  "Amount Requested": "অনুরোধকৃত পরিমাণ",
+  "Latest Update": "সর্বশেষ আপডেট",
+};
+
 export function DemoProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<DemoContextType["user"]>(null);
   const [members, setMembers] = React.useState<Member[]>(defaultMembers);
@@ -245,6 +389,7 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
   const [facilityBookings, setFacilityBookings] = React.useState<FacilityBooking[]>(defaultFacilityBookings);
   const [invoices, setInvoices] = React.useState<Invoice[]>(defaultInvoices);
   const [notifications, setNotifications] = React.useState<NotificationItem[]>(defaultNotifications);
+  const [language, setLanguage] = React.useState<"en" | "bn">("en");
 
   // Sync state from localStorage on Mount
   React.useEffect(() => {
@@ -275,6 +420,11 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
 
       const storedNotifications = localStorage.getItem("mpa_demo_notifications");
       if (storedNotifications) setNotifications(JSON.parse(storedNotifications));
+
+      const storedLang = localStorage.getItem("mpa_demo_lang");
+      if (storedLang === "en" || storedLang === "bn") {
+        setLanguage(storedLang as "en" | "bn");
+      }
     } catch (e) {
       console.error("Failed to load local storage state", e);
     }
@@ -287,6 +437,30 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
     } catch (e) {
       console.error("Failed to save to local storage", e);
     }
+  };
+
+  const toggleLanguage = () => {
+    const nextLang = language === "en" ? "bn" : "en";
+    setLanguage(nextLang);
+    try {
+      localStorage.setItem("mpa_demo_lang", nextLang);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const t = (key: string, englishDefault: string): string => {
+    if (language === "bn") {
+      return translationDict[key] || translationDict[englishDefault] || englishDefault;
+    }
+    return englishDefault;
+  };
+
+  const formatCurrency = (amount: number): string => {
+    if (language === "bn") {
+      return translateDigits(`৳${amount.toLocaleString()}`);
+    }
+    return `$${amount.toLocaleString()}`;
   };
 
   const login = async (badge: string, email: string, password: string): Promise<boolean> => {
@@ -655,6 +829,11 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
         facilityBookings,
         invoices,
         notifications,
+        
+        language,
+        toggleLanguage,
+        t,
+        formatCurrency,
         
         login,
         logout,

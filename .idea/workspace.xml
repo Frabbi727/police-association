@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7feabbee-58d8-4202-953b-8487fb216a59" name="Changes" comment="add initial components and utilities for the Metropolitan Police Association website">
+    <list default="true" id="7feabbee-58d8-4202-953b-8487fb216a59" name="Changes" comment="implement hero image slider and notices ticker for homepage">
+      <change afterPath="$PROJECT_DIR$/public/images/309563497_415511680752905_2210960597977463845_n.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/admin/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(admin)/admin/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(member)/dashboard/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(member)/dashboard/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(member)/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(member)/dashboard/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(public)/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(public)/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/demo-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/demo-context.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,23 +51,23 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0496448213546699" />
-      <entry key="MS500" value="2.1945416511552356" />
-      <entry key="S2" value="3.844253131562273" />
-      <entry key="S5" value="4.477427993077791" />
-      <entry key="S10" value="4.727278044648121" />
-      <entry key="S30" value="4.9105205251221" />
-      <entry key="S60" value="5.096459599685881" />
-      <entry key="M2" value="5.866285191692616" />
-      <entry key="M5" value="9.041596200820065" />
-      <entry key="M10" value="15.012385188591002" />
-      <entry key="M15" value="19.89082085276877" />
-      <entry key="M30" value="28.423673424734336" />
-      <entry key="H1" value="35.0140190023901" />
-      <entry key="H2" value="39.15446313582222" />
-      <entry key="H4" value="41.48137112234956" />
-      <entry key="D1" value="43.56620082866633" />
-      <entry key="W1" value="43.937675426900036" />
+      <entry key="MS100" value="1.4602444677289337" />
+      <entry key="MS500" value="3.2055061505644216" />
+      <entry key="S2" value="4.396730799674539" />
+      <entry key="S5" value="4.741861030194023" />
+      <entry key="S10" value="4.8679075991252905" />
+      <entry key="S30" value="4.955788190774886" />
+      <entry key="S60" value="5.029611956327379" />
+      <entry key="M2" value="5.5816643570614985" />
+      <entry key="M5" value="8.610391820442597" />
+      <entry key="M10" value="14.490125590556074" />
+      <entry key="M15" value="19.651825902626406" />
+      <entry key="M30" value="29.395437769708355" />
+      <entry key="H1" value="37.43828059237569" />
+      <entry key="H2" value="42.68682536111286" />
+      <entry key="H4" value="45.69652469125992" />
+      <entry key="D1" value="48.427724071331816" />
+      <entry key="W1" value="48.917697148735655" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -83,23 +89,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.007519694465237" />
-      <entry key="MS500" value="2.1760554891919006" />
-      <entry key="S2" value="3.835315034623838" />
-      <entry key="S5" value="4.473157591358615" />
-      <entry key="S10" value="4.72500419005333" />
-      <entry key="S30" value="4.909728605134355" />
-      <entry key="S60" value="5.0960477095779355" />
-      <entry key="M2" value="5.86604714001436" />
-      <entry key="M5" value="9.041439429048355" />
-      <entry key="M10" value="15.012210354748907" />
-      <entry key="M15" value="19.890635678710776" />
-      <entry key="M30" value="28.423511607982384" />
-      <entry key="H1" value="35.01390885716869" />
-      <entry key="H2" value="39.154398490556204" />
-      <entry key="H4" value="41.48133605594818" />
-      <entry key="D1" value="43.56619456965571" />
-      <entry key="W1" value="43.93767452213683" />
+      <entry key="MS100" value="1.3787607624296798" />
+      <entry key="MS500" value="3.173852450022275" />
+      <entry key="S2" value="4.385437743013542" />
+      <entry key="S5" value="4.736918784038177" />
+      <entry key="S10" value="4.8653573573473485" />
+      <entry key="S30" value="4.954919600084764" />
+      <entry key="S60" value="5.029171136327172" />
+      <entry key="M2" value="5.581421396937311" />
+      <entry key="M5" value="8.610241438897447" />
+      <entry key="M10" value="14.48997116715379" />
+      <entry key="M15" value="19.65166023154269" />
+      <entry key="M30" value="29.395284251086178" />
+      <entry key="H1" value="37.43817123270315" />
+      <entry key="H2" value="42.68675948054282" />
+      <entry key="H4" value="45.69648845915459" />
+      <entry key="D1" value="48.42771752735819" />
+      <entry key="W1" value="48.9176962008329" />
     </decayedShown>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/opt/homebrew/Cellar/php/8.4.10/bin/php" />
@@ -143,7 +149,7 @@
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/fazlerabbi/Desktop/Projects/police-association/doc",
+    "last_opened_file_path": "/Users/fazlerabbi/Desktop/Projects/police-association/public/images",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -165,6 +171,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/images" />
       <recent name="$PROJECT_DIR$/doc" />
     </key>
   </component>
@@ -199,7 +206,7 @@
       <option name="presentableId" value="Default" />
       <updated>1784049802339</updated>
       <workItem from="1784049804160" duration="298000" />
-      <workItem from="1784050177500" duration="2018000" />
+      <workItem from="1784050177500" duration="2703000" />
     </task>
     <task id="LOCAL-00001" summary="add initial components and utilities for the Metropolitan Police Association website">
       <option name="closed" value="true" />
@@ -225,7 +232,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784051368683</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="implement hero image slider and notices ticker for homepage">
+      <option name="closed" value="true" />
+      <created>1784052246700</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1784052246700</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,6 +248,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add initial components and utilities for the Metropolitan Police Association website" />
-    <option name="LAST_COMMIT_MESSAGE" value="add initial components and utilities for the Metropolitan Police Association website" />
+    <MESSAGE value="implement hero image slider and notices ticker for homepage" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement hero image slider and notices ticker for homepage" />
   </component>
 </project>
