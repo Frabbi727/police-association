@@ -25,7 +25,7 @@ const itemVariants: Variants = {
 export default function Home() {
   const { notices, t, language } = useDemo();
   const [currentSlide, setCurrentSlide] = React.useState(0);
-  const [activeFacilityTab, setActiveFacilityTab] = React.useState<"library" | "gym" | "hostel" | "welfare">("library");
+  const [activeFacilityTab, setActiveFacilityTab] = React.useState<"library" | "gym" | "hostel" | "welfare" | "legal" | "sports" | "scholarship">("library");
   const [noticeFilter, setNoticeFilter] = React.useState<"all" | "notice" | "statement" | "congratulations">("all");
   const [expandedNoticeId, setExpandedNoticeId] = React.useState<string | null>(null);
 
@@ -275,17 +275,20 @@ export default function Home() {
           </div>
 
           {/* Tabs header */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 max-w-3xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 max-w-5xl mx-auto">
             {[
               { id: "library", label: t("Police Library", "Police Library") },
               { id: "gym", label: t("Physical Fitness Gym", "Physical Fitness Gym") },
               { id: "hostel", label: t("Transit Hostel", "Transit Hostel") },
               { id: "welfare", label: t("Welfare & Consulting", "Welfare & Consulting") },
+              { id: "legal", label: t("Legal Defense", "Legal Defense") },
+              { id: "sports", label: t("Community Sports", "Community Sports") },
+              { id: "scholarship", label: t("Education Grants", "Education Grants") },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveFacilityTab(tab.id as any)}
-                className={`px-6 py-3 rounded-full text-xs font-bold transition-all duration-300 border ${
+                className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-300 border ${
                   activeFacilityTab === tab.id
                     ? "bg-primary border-primary text-primary-foreground shadow-md shadow-primary/15"
                     : "border-border bg-card hover:bg-muted text-muted-foreground hover:text-foreground"
@@ -316,7 +319,10 @@ export default function Home() {
                       activeFacilityTab === "library" ? "/images/facilities_library.jpg" :
                       activeFacilityTab === "gym" ? "/images/facilities_gym.jpg" :
                       activeFacilityTab === "hostel" ? "/images/facilities_hostel.jpg" :
-                      "/images/facilities_welfare.jpg"
+                      activeFacilityTab === "welfare" ? "/images/facilities_welfare.jpg" :
+                      activeFacilityTab === "legal" ? "/images/facilities_legal.jpg" :
+                      activeFacilityTab === "sports" ? "/images/facilities_sports.jpg" :
+                      "/images/facilities_scholarships.jpg"
                     }
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     alt={activeFacilityTab}
@@ -343,13 +349,19 @@ export default function Home() {
                       {activeFacilityTab === "library" ? t("Library Resources", "Library Resources") :
                        activeFacilityTab === "gym" ? t("Wellness & Training", "Wellness & Training") :
                        activeFacilityTab === "hostel" ? t("Guest Suites & Lodging", "Guest Suites & Lodging") :
-                       t("Welfare Support Office", "Welfare Support Office")}
+                       activeFacilityTab === "welfare" ? t("Welfare Support Office", "Welfare Support Office") :
+                       activeFacilityTab === "legal" ? t("24/7 Legal Shield", "24/7 Legal Shield") :
+                       activeFacilityTab === "sports" ? t("Youth & Outreach", "Youth & Outreach") :
+                       t("Academic Scholarships", "Academic Scholarships")}
                     </span>
                     <h3 className="text-2xl font-extrabold text-foreground mt-3">
                       {activeFacilityTab === "library" ? t("BPA Central Library", "BPA Central Library") :
                        activeFacilityTab === "gym" ? t("Rajarbagh Police Gym", "Rajarbagh Police Gym") :
                        activeFacilityTab === "hostel" ? t("Police Transit Hostel", "Police Transit Hostel") :
-                       t("Member Welfare Operations", "Member Welfare Operations")}
+                       activeFacilityTab === "welfare" ? t("Member Welfare Operations", "Member Welfare Operations") :
+                       activeFacilityTab === "legal" ? t("BPSA Legal Defense Fund", "BPSA Legal Defense Fund") :
+                       activeFacilityTab === "sports" ? t("Police-Youth Athletic League", "Police-Youth Athletic League") :
+                       t("BDPA Educational Awards", "BDPA Educational Awards")}
                     </h3>
                   </div>
 
@@ -361,7 +373,13 @@ export default function Home() {
                       t("State-of-the-art cardiovascular and strength conditioning equipment open 24/7 at Rajarbagh. Active members can view current trainer availability and reserve personal slots to avoid overcrowding.", "State-of-the-art cardiovascular and strength conditioning equipment open 24/7 at Rajarbagh. Active members can view current trainer availability and reserve personal slots to avoid overcrowding.") :
                      activeFacilityTab === "hostel" ?
                       t("Provides high-quality premium guest suites for officers on official transit or family visits. Features fully automated reservation systems, check-in details, and real-time ledger billing via the payments portal.", "Provides high-quality premium guest suites for officers on official transit or family visits. Features fully automated reservation systems, check-in details, and real-time ledger billing via the payments portal.") :
-                      t("A dedicated counseling center offering family assistance grants, scholarship applications, and retired officer welfare resources. Claims can be submitted online with live tracker status updates.", "A dedicated counseling center offering family assistance grants, scholarship applications, and retired officer welfare resources. Claims can be submitted online with live tracker status updates.")}
+                     activeFacilityTab === "welfare" ?
+                      t("A dedicated counseling center offering family assistance grants, scholarship applications, and retired officer welfare resources. Claims can be submitted online with live tracker status updates.", "A dedicated counseling center offering family assistance grants, scholarship applications, and retired officer welfare resources. Claims can be submitted online with live tracker status updates.") :
+                     activeFacilityTab === "legal" ?
+                      t("Provides immediate, comprehensive legal representation for all active members. Our legal defense fund offers 24/7 coverage for incidents, disciplinary review hearings, and administrative inquiries.", "Provides immediate, comprehensive legal representation for all active members. Our legal defense fund offers 24/7 coverage for incidents, disciplinary review hearings, and administrative inquiries.") :
+                     activeFacilityTab === "sports" ?
+                      t("Engaging local youth through organized basketball and football leagues, community resource drives, and neighborhood safety campaigns to build mutual trust and positive community partnerships.", "Engaging local youth through organized basketball and football leagues, community resource drives, and neighborhood safety campaigns to build mutual trust and positive community partnerships.") :
+                      t("Empowering the children of our brave officers by offering merit-based higher education scholarships, tuition support grants, and school achievement congratulations recognitions.", "Empowering the children of our brave officers by offering merit-based higher education scholarships, tuition support grants, and school achievement congratulations recognitions.")}
                   </p>
 
                   {/* Highlights Grid */}
@@ -371,13 +389,19 @@ export default function Home() {
                         {activeFacilityTab === "library" ? t("Borrowing Limit", "Borrowing Limit") :
                          activeFacilityTab === "gym" ? t("Availability", "Availability") :
                          activeFacilityTab === "hostel" ? t("Room Capacities", "Room Capacities") :
-                         t("Processing Speed", "Processing Speed")}
+                         activeFacilityTab === "welfare" ? t("Processing Speed", "Processing Speed") :
+                         activeFacilityTab === "legal" ? t("Hourly Coverage", "Hourly Coverage") :
+                         activeFacilityTab === "sports" ? t("Annual Outreach", "Annual Outreach") :
+                         t("Scholarship Grant", "Scholarship Grant")}
                       </h4>
                       <p className="text-xs font-bold text-foreground mt-1">
                         {activeFacilityTab === "library" ? t("3 Books / 14 Days", "3 Books / 14 Days") :
                          activeFacilityTab === "gym" ? t("24/7 Access Card", "24/7 Access Card") :
                          activeFacilityTab === "hostel" ? t("6 Suites (Rajarbagh)", "6 Suites (Rajarbagh)") :
-                         t("24-48 Hours Review", "24-48 Hours Review")}
+                         activeFacilityTab === "welfare" ? t("24-48 Hours Review", "24-48 Hours Review") :
+                         activeFacilityTab === "legal" ? t("24/7 Emergency Line", "24/7 Emergency Line") :
+                         activeFacilityTab === "sports" ? t("5,000+ Youths Reached", "5,000+ Youths Reached") :
+                         t("৳১০,০০০ - ৳৫০,০০০", "৳১০,০০০ - ৳৫০,০০০")}
                       </p>
                     </div>
                     <div>
@@ -385,13 +409,19 @@ export default function Home() {
                         {activeFacilityTab === "library" ? t("Search Roster", "Search Roster") :
                          activeFacilityTab === "gym" ? t("Daily Reservation", "Daily Reservation") :
                          activeFacilityTab === "hostel" ? t("Booking Fee", "Booking Fee") :
-                         t("Emergency Hotline", "Emergency Hotline")}
+                         activeFacilityTab === "welfare" ? t("Emergency Hotline", "Emergency Hotline") :
+                         activeFacilityTab === "legal" ? t("Representation Cost", "Representation Cost") :
+                         activeFacilityTab === "sports" ? t("Complex Location", "Complex Location") :
+                         t("Scholarships Awarded", "Scholarships Awarded")}
                       </h4>
                       <p className="text-xs font-bold text-foreground mt-1 text-primary">
                         {activeFacilityTab === "library" ? t("Digital OPAC System", "Digital OPAC System") :
                          activeFacilityTab === "gym" ? t("Up to 2 Hours / Day", "Up to 2 Hours / Day") :
                          activeFacilityTab === "hostel" ? t("৳৫০০ - ৳১,০০০ / Night", "৳৫০০ - ৳১,০০০ / Night") :
-                         t("+880 1320-001299", "+880 1320-001299")}
+                         activeFacilityTab === "welfare" ? t("+880 1320-001299", "+880 1320-001299") :
+                         activeFacilityTab === "legal" ? t("৳০ (100% Free for Members)", "৳০ (100% Free for Members)") :
+                         activeFacilityTab === "sports" ? t("Sector 4 Sports Arena", "Sector 4 Sports Arena") :
+                         t("1,200+ Students / Year", "1,200+ Students / Year")}
                       </p>
                     </div>
                   </div>
