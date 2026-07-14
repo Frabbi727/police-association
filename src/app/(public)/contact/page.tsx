@@ -2,13 +2,29 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
+import { useDemo } from "@/lib/demo-context";
 import { Mail, Phone, MapPin, Send, ShieldCheck, Clock, ShieldAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
+const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
 export default function ContactPage() {
+  const { t } = useDemo();
   const [submitted, setSubmitted] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [formErrors, setFormErrors] = React.useState<Record<string, string>>({});
@@ -22,9 +38,9 @@ export default function ContactPage() {
     const message = formData.get("message") as string;
 
     const errors: Record<string, string> = {};
-    if (!name || name.trim().length < 2) errors.name = "Full name is required.";
-    if (!email || !/\S+@\S+\.\S+/.test(email)) errors.email = "Please enter a valid email.";
-    if (!message || message.trim().length < 10) errors.message = "Message must be at least 10 characters.";
+    if (!name || name.trim().length < 2) errors.name = t("Full name is required.", "Full name is required.");
+    if (!email || !/\S+@\S+\.\S+/.test(email)) errors.email = t("Please enter a valid email.", "Please enter a valid email.");
+    if (!message || message.trim().length < 10) errors.message = t("Message must be at least 10 characters.", "Message must be at least 10 characters.");
 
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
@@ -44,12 +60,12 @@ export default function ContactPage() {
       <section className="relative py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-border bg-card/20">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent pointer-events-none" />
         <div className="container mx-auto max-w-4xl text-center space-y-4">
-          <span className="text-2xs font-bold uppercase tracking-widest text-accent">Get in Touch</span>
+          <span className="text-2xs font-bold uppercase tracking-widest text-accent">{t("Get in Touch", "Get in Touch")}</span>
           <h1 className="text-3xl font-extrabold sm:text-5xl tracking-tight text-foreground">
-            Contact the Association
+            {t("Contact the Association", "Contact the Association")}
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Have questions regarding membership, representation, or benefits? We are here to support you.
+            {t("Have questions regarding membership, representation, or benefits? We are here to support you.", "Have questions regarding membership, representation, or benefits? We are here to support you.")}
           </p>
         </div>
       </section>
@@ -59,12 +75,12 @@ export default function ContactPage() {
         <div className="container mx-auto max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             
-            {/* Contact Information (4 cols) */}
+            {/* Contact Information (5 cols) */}
             <div className="lg:col-span-5 space-y-8">
               <div className="space-y-4">
-                <h2 className="text-2xl font-extrabold tracking-tight">Association Headquarters</h2>
+                <h2 className="text-2xl font-extrabold tracking-tight">{t("Association Headquarters", "Association Headquarters")}</h2>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Our administrative offices are open Monday through Friday, 8:30 AM to 5:00 PM. For emergency legal representation or critical incident support, members should call the emergency hotline.
+                  {t("Our administrative offices are open Monday through Friday, 8:30 AM to 5:00 PM. For emergency legal representation or critical incident support, members should call the emergency hotline.", "Our administrative offices are open Monday through Friday, 8:30 AM to 5:00 PM. For emergency legal representation or critical incident support, members should call the emergency hotline.")}
                 </p>
               </div>
 
@@ -72,41 +88,64 @@ export default function ContactPage() {
                 {[
                   {
                     icon: MapPin,
-                    title: "Physical Address",
-                    desc: "4820 Liberty Ave, Sector 4, Metro City, MC 10023",
+                    title: t("Physical Address", "Physical Address"),
+                    desc: t("Rajarbagh Police Lines, Dhaka - 1217, Bangladesh", "Rajarbagh Police Lines, Dhaka - 1217, Bangladesh"),
                   },
                   {
                     icon: Phone,
-                    title: "Administrative Phone",
-                    desc: "(555) 019-3820 (Toll-Free: 1-800-555-4MPA)",
+                    title: t("Administrative Phone", "Administrative Phone"),
+                    desc: t("+880 2-223381967", "+880 2-223381967"),
                   },
                   {
                     icon: Phone,
-                    title: "24/7 Critical Incident Support",
-                    desc: "(555) 911-MPA1 (Badge verification required)",
+                    title: t("24/7 Critical Incident Support", "24/7 Critical Incident Support"),
+                    desc: t("+880 1320-001299 (Badge verification required)", "+880 1320-001299 (Badge verification required)"),
                     accent: true,
                   },
                   {
                     icon: Mail,
-                    title: "General Inquiries Email",
-                    desc: "support@metro-pa.org",
+                    title: t("General Inquiries Email", "General Inquiries Email"),
+                    desc: "support@bangladesh-police-association.org",
                   },
                   {
                     icon: Clock,
-                    title: "Office Hours",
-                    desc: "Mon - Fri: 8:30 AM - 5:00 PM",
+                    title: t("Office Hours", "Office Hours"),
+                    desc: t("Mon - Fri: 8:30 AM - 5:00 PM", "Mon - Fri: 8:30 AM - 5:00 PM"),
                   },
-                ].map((item, idx) => (
-                  <div key={idx} className={`flex gap-4 p-4 rounded-2xl border ${item.accent ? 'border-accent/40 bg-accent/5' : 'border-border bg-card/50'}`}>
-                    <div className={`p-2.5 rounded-xl ${item.accent ? 'bg-accent/25 text-accent' : 'bg-muted text-muted-foreground'}`}>
-                      <item.icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-sm text-foreground">{item.title}</h4>
-                      <p className="text-xs text-muted-foreground mt-0.5">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
+                  {
+                    icon: FacebookIcon,
+                    title: t("Official Facebook Page", "Official Facebook Page"),
+                    desc: "facebook.com/bdpa1920",
+                    link: "https://www.facebook.com/bdpa1920/?locale=bn_IN"
+                  },
+                ].map((item, idx) => {
+                  const Container = item.link ? 'a' : 'div';
+                  const extraProps = item.link ? { href: item.link, target: "_blank", rel: "noopener noreferrer" } : {};
+                  return (
+                    <Container
+                      key={idx}
+                      {...extraProps}
+                      className={`flex gap-4 p-4 rounded-2xl border ${
+                        item.accent ? 'border-accent/40 bg-accent/5' : 'border-border bg-card/50'
+                      } ${item.link ? 'hover:border-accent hover:bg-accent/5 transition-all duration-200 cursor-pointer' : ''}`}
+                    >
+                      <div className={`p-2.5 rounded-xl ${item.accent ? 'bg-accent/25 text-accent' : 'bg-muted text-muted-foreground'}`}>
+                        <item.icon className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-foreground flex items-center gap-1.5">
+                          {item.title}
+                          {item.link && (
+                            <span className="text-[9px] font-semibold text-accent uppercase tracking-wider bg-accent/10 px-1.5 py-0.5 rounded border border-accent/20">
+                              {t("Link", "Link")}
+                            </span>
+                          )}
+                        </h4>
+                        <p className="text-xs text-muted-foreground mt-0.5">{item.desc}</p>
+                      </div>
+                    </Container>
+                  );
+                })}
               </div>
             </div>
 
@@ -114,9 +153,9 @@ export default function ContactPage() {
             <div className="lg:col-span-7">
               <Card className="border-border shadow-xl backdrop-blur-sm bg-card/90">
                 <CardHeader className="pb-6 border-b border-border">
-                  <CardTitle className="text-xl font-bold tracking-tight">Send a Message</CardTitle>
+                  <CardTitle className="text-xl font-bold tracking-tight">{t("Send a Message", "Send a Message")}</CardTitle>
                   <CardDescription className="text-2xs text-muted-foreground">
-                    Please use the form below to contact our staff. Officers requiring legal representation should call the emergency hotline directly.
+                    {t("Please use the form below to contact our staff. Officers requiring legal representation should call the emergency hotline directly.", "Please use the form below to contact our staff. Officers requiring legal representation should call the emergency hotline directly.")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
@@ -129,19 +168,19 @@ export default function ContactPage() {
                       <div className="h-16 w-16 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                         <ShieldCheck className="h-8 w-8 text-accent" />
                       </div>
-                      <h3 className="text-lg font-bold">Message Received Successfully</h3>
+                      <h3 className="text-lg font-bold">{t("Message Received Successfully", "Message Received Successfully")}</h3>
                       <p className="text-xs text-muted-foreground max-w-sm">
-                        Thank you for contacting us. An association representative will review your message and reply via email within 24 to 48 hours.
+                        {t("Thank you for contacting us. An association representative will review your message and reply via email within 24 to 48 hours.", "Thank you for contacting us. An association representative will review your message and reply via email within 24 to 48 hours.")}
                       </p>
                       <Button variant="outline" className="rounded-xl mt-4" onClick={() => setSubmitted(false)}>
-                        Send Another Message
+                        {t("Send Another Message", "Send Another Message")}
                       </Button>
                     </motion.div>
                   ) : (
                     <form onSubmit={handleSubmit} noValidate className="space-y-4">
                       {/* Name */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="name" className="text-xs font-semibold">Full Name</Label>
+                        <Label htmlFor="name" className="text-xs font-semibold">{t("Full Name", "Full Name")}</Label>
                         <Input
                           id="name"
                           name="name"
@@ -149,7 +188,7 @@ export default function ContactPage() {
                           autoComplete="name"
                           required
                           className="rounded-xl h-11 border-border focus-visible:ring-accent"
-                          placeholder="Officer John Doe"
+                          placeholder={t("e.g. Officer name", "e.g. Officer name")}
                         />
                         {formErrors.name && (
                           <p className="text-2xs text-destructive font-medium flex items-center gap-1">
@@ -162,7 +201,7 @@ export default function ContactPage() {
                       {/* Contact Info (Row on Desktop) */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-1.5">
-                          <Label htmlFor="email" className="text-xs font-semibold">Email Address</Label>
+                          <Label htmlFor="email" className="text-xs font-semibold">{t("Email Address", "Email Address")}</Label>
                           <Input
                             id="email"
                             name="email"
@@ -170,7 +209,7 @@ export default function ContactPage() {
                             autoComplete="email"
                             required
                             className="rounded-xl h-11 border-border focus-visible:ring-accent"
-                            placeholder="john.doe@example.com"
+                            placeholder="officer@example.gov.bd"
                           />
                           {formErrors.email && (
                             <p className="text-2xs text-destructive font-medium flex items-center gap-1">
@@ -181,7 +220,7 @@ export default function ContactPage() {
                         </div>
 
                         <div className="space-y-1.5">
-                          <Label htmlFor="badge" className="text-xs font-semibold">Badge Number (Optional)</Label>
+                          <Label htmlFor="badge" className="text-xs font-semibold">{t("Badge Number (Optional)", "Badge Number (Optional)")}</Label>
                           <Input
                             id="badge"
                             name="badge"
@@ -194,27 +233,27 @@ export default function ContactPage() {
 
                       {/* Subject */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="subject" className="text-xs font-semibold">Subject</Label>
+                        <Label htmlFor="subject" className="text-xs font-semibold">{t("Subject", "Subject")}</Label>
                         <Input
                           id="subject"
                           name="subject"
                           type="text"
                           required
                           className="rounded-xl h-11 border-border focus-visible:ring-accent"
-                          placeholder="e.g. Membership benefits, legal coverage questions"
+                          placeholder={t("e.g. Membership benefits, legal coverage questions", "e.g. Membership benefits, legal coverage questions")}
                         />
                       </div>
 
                       {/* Message */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="message" className="text-xs font-semibold">Message</Label>
+                        <Label htmlFor="message" className="text-xs font-semibold">{t("Message", "Message")}</Label>
                         <textarea
                           id="message"
                           name="message"
                           required
                           rows={5}
                           className="flex min-h-[120px] w-full rounded-xl border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
-                          placeholder="Describe your inquiry in detail..."
+                          placeholder={t("Describe your inquiry in detail...", "Describe your inquiry in detail...")}
                         />
                         {formErrors.message && (
                           <p className="text-2xs text-destructive font-medium flex items-center gap-1">
@@ -230,7 +269,7 @@ export default function ContactPage() {
                         disabled={loading}
                         className="rounded-xl h-11 w-full bg-primary hover:bg-primary/95 text-primary-foreground font-semibold text-xs shadow-md"
                       >
-                        {loading ? "Sending Message..." : "Send Message"}
+                        {loading ? t("Sending Message...", "Sending Message...") : t("Send Message", "Send Message")}
                         <Send className="ml-2 h-4 w-4 shrink-0" />
                       </Button>
                     </form>
@@ -251,12 +290,12 @@ export default function ContactPage() {
           <div className="mx-auto h-12 w-12 rounded-full bg-accent/15 flex items-center justify-center text-accent shadow-md">
             <MapPin className="h-6 w-6" />
           </div>
-          <h3 className="text-lg font-bold">Interactive Map Location</h3>
+          <h3 className="text-lg font-bold">{t("Interactive Map Location", "Interactive Map Location")}</h3>
           <p className="text-xs text-muted-foreground">
-            Our offices are conveniently located near the municipal courthouse and the Sector 4 precinct headquarters. Parking is available for members.
+            {t("Our offices are conveniently located at Rajarbagh Police Lines, Dhaka, adjacent to public transit and major security facilities.", "Our offices are conveniently located at Rajarbagh Police Lines, Dhaka, adjacent to public transit and major security facilities.")}
           </p>
           <div className="inline-flex gap-2">
-            <Button variant="outline" className="rounded-xl text-xs font-semibold">Get Directions</Button>
+            <Button variant="outline" className="rounded-xl text-xs font-semibold">{t("Get Directions", "Get Directions")}</Button>
           </div>
         </div>
       </section>

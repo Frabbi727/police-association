@@ -2,29 +2,32 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Shield, BookOpen, Clock, Award, CheckCircle } from "lucide-react";
+import { useDemo } from "@/lib/demo-context";
+import { Shield, Clock, CheckCircle } from "lucide-react";
 
 export default function About() {
+  const { t } = useDemo();
+
   const boardMembers = [
     {
-      name: "President John Kowalski",
-      role: "Active Detective, 22 Years Service",
-      bio: "John oversees the association's legal and bargaining agreements, advocating for safer working conditions and fair wage negotiations.",
+      name: t("Kamrul Hasan Talukdar", "Kamrul Hasan Talukdar"),
+      role: t("President, Bangladesh Police Association", "President, Bangladesh Police Association"),
+      bio: t("Oversees the association's strategic direction, legal defense, and welfare advocacy for non-cadre police officers across Bangladesh.", "Oversees the association's strategic direction, legal defense, and welfare advocacy for non-cadre police officers across Bangladesh."),
     },
     {
-      name: "Vice President Marcus Vance",
-      role: "Active Sergeant, 18 Years Service",
-      bio: "Marcus handles community relations and public safety partnerships, coordinating community outreach programs and youth engagement.",
+      name: t("Monirul Haque Dablu", "Monirul Haque Dablu"),
+      role: t("General Secretary, Bangladesh Police Association", "General Secretary, Bangladesh Police Association"),
+      bio: t("Manages union coordination, communications, member relations, and representations of our force nationwide.", "Manages union coordination, communications, member relations, and representations of our force nationwide."),
     },
     {
-      name: "Secretary Sarah Jenkins",
-      role: "Active Patrol Officer, 12 Years Service",
-      bio: "Sarah manages internal communications, documentation, bylaws integrity, and member resource distributions.",
+      name: t("Md. Abdullahhel Baki", "Md. Abdullahhel Baki"),
+      role: t("Vice President, Bangladesh Police Association", "Vice President, Bangladesh Police Association"),
+      bio: t("Coordinates community outreach, regional committees, and public relations partnerships for the association.", "Coordinates community outreach, regional committees, and public relations partnerships for the association."),
     },
     {
-      name: "Treasurer Raymond Vance",
-      role: "Retired Captain, 30 Years Service",
-      bio: "Raymond manages the welfare funds, charitable donations, scholarship programs, and association financial audits.",
+      name: t("Md. Daud Hossain", "Md. Daud Hossain"),
+      role: t("Treasurer, Bangladesh Police Association", "Treasurer, Bangladesh Police Association"),
+      bio: t("Manages the welfare fund distribution, financial audits, and charity program operations of the association.", "Manages the welfare fund distribution, financial audits, and charity program operations of the association."),
     },
   ];
 
@@ -34,12 +37,12 @@ export default function About() {
       <section className="relative py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-border bg-card/20">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent pointer-events-none" />
         <div className="container mx-auto max-w-4xl text-center space-y-4">
-          <span className="text-2xs font-bold uppercase tracking-widest text-accent">Who We Are</span>
+          <span className="text-2xs font-bold uppercase tracking-widest text-accent">{t("Who We Are", "Who We Are")}</span>
           <h1 className="text-3xl font-extrabold sm:text-5xl tracking-tight text-foreground">
-            About Our Association
+            {t("About Our Association", "About Our Association")}
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Representing the professional interests and ensuring the safety and welfare of Metropolitan Police officers since 1991.
+            {t("Representing the professional interests and ensuring the safety and welfare of Bangladesh Police officers since 1920.", "Representing the professional interests and ensuring the safety and welfare of Bangladesh Police officers since 1920.")}
           </p>
         </div>
       </section>
@@ -53,18 +56,18 @@ export default function About() {
               <div className="inline-flex p-2.5 rounded-xl bg-primary/10 text-primary">
                 <Clock className="h-5 w-5" />
               </div>
-              <h2 className="text-2xl font-extrabold tracking-tight">Our Proud History</h2>
+              <h2 className="text-2xl font-extrabold tracking-tight">{t("Our Proud History", "Our Proud History")}</h2>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Founded in 1991 by a small coalition of patrol officers, the Metropolitan Police Association was formed to represent the growing needs of our force. Over three decades, we have expanded to over 5,000 active and retired members.
+                {t("Founded in 1920, the Bangladesh Police Association is one of the oldest professional representations in the region, established to represent the interests of non-cadre police officers from Inspector downwards.", "Founded in 1920, the Bangladesh Police Association is one of the oldest professional representations in the region, established to represent the interests of non-cadre police officers from Inspector downwards.")}
               </p>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Our legacy is built on protecting those who protect others. We continue to lobby for cutting-edge training, robust mental health support, and legal representation to ensure that our officers can perform their duties with confidence and security.
+                {t("Representing over 50,000 members, our legacy is built on protecting those who protect others. We continue to advocate for better welfare services, professional training, legal security, and enhanced community partnerships.", "Representing over 50,000 members, our legacy is built on protecting those who protect others. We continue to advocate for better welfare services, professional training, legal security, and enhanced community partnerships.")}
               </p>
             </div>
 
             {/* Values bullet points card */}
             <div className="p-8 rounded-3xl border border-border bg-card shadow-sm space-y-6">
-              <h3 className="text-sm font-bold tracking-wide uppercase text-accent">Our Core Directives</h3>
+              <h3 className="text-sm font-bold tracking-wide uppercase text-accent">{t("Our Core Directives", "Our Core Directives")}</h3>
               <ul className="space-y-4">
                 {[
                   "Negotiating fair labor agreements and competitive benefit structures.",
@@ -74,7 +77,7 @@ export default function About() {
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 items-start text-xs text-muted-foreground">
                     <CheckCircle className="h-4 w-4 text-accent shrink-0 mt-0.5" />
-                    <span>{item}</span>
+                    <span>{t(item, item)}</span>
                   </li>
                 ))}
               </ul>
@@ -87,10 +90,10 @@ export default function About() {
       <section className="py-20 px-4 sm:px-6 lg:px-8 border-t border-border bg-card/10">
         <div className="container mx-auto max-w-6xl space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-accent">Leadership</h2>
-            <p className="text-2xl font-extrabold sm:text-3xl">Executive Board Officers</p>
+            <h2 className="text-xs font-bold uppercase tracking-widest text-accent">{t("Leadership", "Leadership")}</h2>
+            <p className="text-2xl font-extrabold sm:text-3xl">{t("Executive Board Officers", "Executive Board Officers")}</p>
             <p className="text-xs text-muted-foreground">
-              Committed to transparency, representation, and guiding the association forward.
+              {t("Committed to transparency, representation, and guiding the association forward.", "Committed to transparency, representation, and guiding the association forward.")}
             </p>
           </div>
 
@@ -105,9 +108,13 @@ export default function About() {
                 className="p-6 rounded-2xl border border-border bg-card hover:border-primary/50 transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  {/* Mock profile image using CSS styling and icons */}
-                  <div className="h-16 w-16 rounded-2xl bg-muted text-muted-foreground flex items-center justify-center mb-4 border border-border shadow-inner">
-                    <Shield className="h-8 w-8 text-primary/70" />
+                  {/* Logo header rendering */}
+                  <div className="h-16 w-16 rounded-2xl bg-card text-muted-foreground flex items-center justify-center mb-4 border border-border shadow-inner overflow-hidden">
+                    <img
+                      src="/images/309563497_415511680752905_2210960597977463845_n.png"
+                      className="h-12 w-12 object-contain"
+                      alt="Logo"
+                    />
                   </div>
                   <h3 className="font-bold text-foreground text-sm">{member.name}</h3>
                   <p className="text-3xs text-accent uppercase font-bold tracking-wider mt-0.5">{member.role}</p>

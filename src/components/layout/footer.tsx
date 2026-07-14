@@ -3,6 +3,50 @@
 import Link from "next/link";
 import { Shield, Phone, Mail, MapPin, Scale } from "lucide-react";
 
+// Clean inline SVG components for brands since some lucide-react versions exclude them
+const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
+const TwitterIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+  </svg>
+);
+
+const YoutubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+  </svg>
+);
+
 export function Footer() {
   return (
     <footer className="w-full border-t border-border bg-card text-card-foreground">
@@ -26,6 +70,35 @@ export function Footer() {
             <div className="flex items-center gap-2 text-xs text-muted-foreground font-semibold">
               <Scale className="h-4 w-4 text-accent" />
               <span>Incorporated Non-Profit Organization</span>
+            </div>
+            <div className="flex items-center gap-3 pt-2">
+              <a
+                href="https://www.facebook.com/bdpa1920/?locale=bn_IN"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-8 w-8 rounded-lg border border-border flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-accent transition-all duration-200"
+                title="Facebook"
+              >
+                <FacebookIcon className="h-4 w-4 shrink-0" />
+              </a>
+              <a
+                href="https://twitter.com/BD_PoliceOfficial"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-8 w-8 rounded-lg border border-border flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-accent transition-all duration-200"
+                title="Twitter/X"
+              >
+                <TwitterIcon className="h-4 w-4 shrink-0" />
+              </a>
+              <a
+                href="https://www.youtube.com/@BDPoliceOfficial"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-8 w-8 rounded-lg border border-border flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-accent transition-all duration-200"
+                title="YouTube"
+              >
+                <YoutubeIcon className="h-4 w-4 shrink-0" />
+              </a>
             </div>
           </div>
 
@@ -86,24 +159,24 @@ export function Footer() {
           {/* Contact Column */}
           <div>
             <h3 className="text-sm font-bold tracking-wider uppercase text-foreground mb-4">Contact Information</h3>
-            <ul className="space-y-3 text-xs">
+            <ul className="space-y-3 text-xs text-left">
               <li className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-accent shrink-0" />
+                <MapPin className="h-4 w-4 text-accent shrink-0 mt-0.5" />
                 <span className="text-muted-foreground leading-snug">
-                  1250 Security Plaza, Suite 400<br />
-                  Metropolis, NY 10001
+                  Rajarbagh Police Lines<br />
+                  Dhaka - 1217, Bangladesh
                 </span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-accent shrink-0" />
-                <a href="tel:555-0199" className="text-muted-foreground hover:text-primary transition-colors">
-                  (555) 019-9900
+                <a href="tel:+8802223381967" className="text-muted-foreground hover:text-primary transition-colors">
+                  +880 2-223381967
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-accent shrink-0" />
-                <a href="mailto:info@metro-police-association.org" className="text-muted-foreground hover:text-primary transition-colors">
-                  info@metro-police-association.org
+                <a href="mailto:support@bangladesh-police-association.org" className="text-muted-foreground hover:text-primary transition-colors">
+                  support@bangladesh-police-association.org
                 </a>
               </li>
             </ul>
