@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7feabbee-58d8-4202-953b-8487fb216a59" name="Changes" comment="add initial components and utilities for the Metropolitan Police Association website">
-      <change afterPath="$PROJECT_DIR$/doc/Police_Association_Frontend_Demo_PRD.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/about/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/dashboard/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/donate/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/news/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(public)/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(public)/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,23 +45,23 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.4911455396464892" />
-      <entry key="MS500" value="3.4493437147141286" />
-      <entry key="S2" value="4.525168678814199" />
-      <entry key="S5" value="4.801690216622882" />
-      <entry key="S10" value="4.8993881218854956" />
-      <entry key="S30" value="4.966152387223155" />
-      <entry key="S60" value="4.991666436396857" />
-      <entry key="M2" value="5.271631756849202" />
-      <entry key="M5" value="8.231429620812204" />
-      <entry key="M10" value="12.750421908097312" />
-      <entry key="M15" value="15.427172607017425" />
-      <entry key="M30" value="19.060436882761834" />
-      <entry key="H1" value="21.340494380690433" />
-      <entry key="H2" value="22.619037458684808" />
-      <entry key="H4" value="23.296210676111865" />
-      <entry key="D1" value="23.880808878303455" />
-      <entry key="W1" value="23.982925747661106" />
+      <entry key="MS100" value="1.0496448213546699" />
+      <entry key="MS500" value="2.1945416511552356" />
+      <entry key="S2" value="3.844253131562273" />
+      <entry key="S5" value="4.477427993077791" />
+      <entry key="S10" value="4.727278044648121" />
+      <entry key="S30" value="4.9105205251221" />
+      <entry key="S60" value="5.096459599685881" />
+      <entry key="M2" value="5.866285191692616" />
+      <entry key="M5" value="9.041596200820065" />
+      <entry key="M10" value="15.012385188591002" />
+      <entry key="M15" value="19.89082085276877" />
+      <entry key="M30" value="28.423673424734336" />
+      <entry key="H1" value="35.0140190023901" />
+      <entry key="H2" value="39.15446313582222" />
+      <entry key="H4" value="41.48137112234956" />
+      <entry key="D1" value="43.56620082866633" />
+      <entry key="W1" value="43.937675426900036" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -90,23 +83,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.4560664897342293" />
-      <entry key="MS500" value="3.4290581368548705" />
-      <entry key="S2" value="4.5183182425406265" />
-      <entry key="S5" value="4.798769397668224" />
-      <entry key="S10" value="4.897895902579894" />
-      <entry key="S30" value="4.965647743939175" />
-      <entry key="S60" value="4.991412180947692" />
-      <entry key="M2" value="5.271470815357305" />
-      <entry key="M5" value="8.231160370238651" />
-      <entry key="M10" value="12.750115780717405" />
-      <entry key="M15" value="15.426898979032623" />
-      <entry key="M30" value="19.060252280227452" />
-      <entry key="H1" value="21.34038695925271" />
-      <entry key="H2" value="22.618979491833883" />
-      <entry key="H4" value="23.2961805633918" />
-      <entry key="D1" value="23.880803696842314" />
-      <entry key="W1" value="23.982925003390488" />
+      <entry key="MS100" value="1.007519694465237" />
+      <entry key="MS500" value="2.1760554891919006" />
+      <entry key="S2" value="3.835315034623838" />
+      <entry key="S5" value="4.473157591358615" />
+      <entry key="S10" value="4.72500419005333" />
+      <entry key="S30" value="4.909728605134355" />
+      <entry key="S60" value="5.0960477095779355" />
+      <entry key="M2" value="5.86604714001436" />
+      <entry key="M5" value="9.041439429048355" />
+      <entry key="M10" value="15.012210354748907" />
+      <entry key="M15" value="19.890635678710776" />
+      <entry key="M30" value="28.423511607982384" />
+      <entry key="H1" value="35.01390885716869" />
+      <entry key="H2" value="39.154398490556204" />
+      <entry key="H4" value="41.48133605594818" />
+      <entry key="D1" value="43.56619456965571" />
+      <entry key="W1" value="43.93767452213683" />
     </decayedShown>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/opt/homebrew/Cellar/php/8.4.10/bin/php" />
@@ -206,7 +199,7 @@
       <option name="presentableId" value="Default" />
       <updated>1784049802339</updated>
       <workItem from="1784049804160" duration="298000" />
-      <workItem from="1784050177500" duration="849000" />
+      <workItem from="1784050177500" duration="2018000" />
     </task>
     <task id="LOCAL-00001" summary="add initial components and utilities for the Metropolitan Police Association website">
       <option name="closed" value="true" />
@@ -224,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784050431984</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add initial components and utilities for the Metropolitan Police Association website">
+      <option name="closed" value="true" />
+      <created>1784051368682</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1784051368683</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

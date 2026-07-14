@@ -1,9 +1,11 @@
 "use client";
 
+import * as React from "react";
 import Link from "next/link";
-import { motion, Variants } from "framer-motion";
-import { Shield, Users, Heart, Award, ChevronRight, Scale, Landmark, Sparkles } from "lucide-react";
+import { motion, AnimatePresence, Variants } from "framer-motion";
+import { Shield, Users, Heart, Award, Scale, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useDemo } from "@/lib/demo-context";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -20,67 +22,189 @@ const itemVariants: Variants = {
   visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
+const slides = [
+  {
+    image: "/images/slider_1.jpg",
+    title: "Honoring Service, Protecting Rights",
+    description: "Dedicated to representing the brave officers of the Metropolitan Police, advocating for fair benefits, safety, and legal security.",
+    tagline: "COMMUNITY REPRESENTATION",
+  },
+  {
+    image: "/images/slider_2.jpg",
+    title: "Unwavering Legal Protection 24/7",
+    description: "Our legal defense fund ensures that every active member has elite representation standing by in critical incidents.",
+    tagline: "CRITICAL INCIDENT DEFENSE",
+  },
+  {
+    image: "/images/slider_3.jpg",
+    title: "Empowering Officers and Families",
+    description: "Supporting officer well-being, mental health programs, and offering tuition scholarships for dependents.",
+    tagline: "WELFARE & MEMBER BENEFITS",
+  },
+  {
+    image: "/images/slider_4.jpg",
+    title: "Strategic Operations Briefings",
+    description: "Delivering timely administrative support, policy directives, and tactical guidelines to all divisions.",
+    tagline: "OPERATIONAL EXCELLENCE",
+  },
+  {
+    image: "/images/slider_5.jpg",
+    title: "Fostering Neighborhood Trust",
+    description: "Building strong bridges of trust and collaboration in our neighborhoods through community-led programs.",
+    tagline: "COMMUNITY PARTNERSHIP",
+  },
+];
+
 export default function Home() {
+  const { notices } = useDemo();
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+
+  // Auto-play Image Slider
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handlePrev = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  const handleNext = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
   return (
     <div className="flex flex-col w-full overflow-hidden bg-background">
-      {/* Hero Section */}
-      <section className="relative flex min-h-[85vh] items-center justify-center py-20 px-4 sm:px-6 lg:px-8 border-b border-border">
-        {/* Abstract futuristic background decorations */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
-        <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-accent/5 via-transparent to-transparent blur-3xl pointer-events-none" />
-        
-        {/* Background Grid Pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      
+      {/* Notices Ticker Banner */}
+      <div className="w-full bg-[#0a0f1d] border-b border-accent/20 text-white h-10 flex items-center overflow-hidden relative z-20">
+        <style>{`
+          @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+          }
+          .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 35s linear infinite;
+          }
+          .animate-marquee:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+        <div className="px-4 bg-[#05070e] h-full flex items-center border-r border-accent/30 z-10 shrink-0 text-3xs font-extrabold text-accent uppercase tracking-wider gap-1.5 shadow-[2px_0_5px_rgba(0,0,0,0.5)]">
+          <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+          <span>Active Bulletins</span>
+        </div>
+        <div className="flex-1 overflow-hidden relative">
+          <div className="animate-marquee cursor-pointer flex gap-12 text-3xs font-bold text-white/80">
+            {notices.map((notice) => (
+              <span key={notice.id} className="hover:text-accent transition-colors flex items-center gap-1.5">
+                <span>•</span>
+                <span>[{notice.category}]</span>
+                <span>{notice.title} ({notice.date})</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
 
-        <div className="container relative z-10 mx-auto max-w-5xl text-center space-y-8">
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6, type: "spring" }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent/20 bg-accent/5 text-accent text-xs font-semibold tracking-wide backdrop-blur-sm"
-          >
-            <Sparkles className="h-3.5 w-3.5 fill-current animate-pulse" />
-            <span>Honoring Service, Protecting Rights, Uniting Community</span>
-          </motion.div>
+      {/* Hero Image Slider Section */}
+      <section className="relative flex min-h-[75vh] md:min-h-[80vh] items-center justify-start py-20 px-4 sm:px-6 lg:px-8 border-b border-border overflow-hidden bg-slate-950">
+        {/* Slide backgrounds */}
+        <div className="absolute inset-0 z-0">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8 }}
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url(${slides[currentSlide].image})` }}
+            >
+              {/* Dark Gradient Overlay for optimal accessibility text contrast */}
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/60 to-slate-900/40" />
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
-          <motion.h1
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-4xl font-extrabold tracking-tight sm:text-6xl text-foreground leading-[1.15]"
-          >
-            Empowering Those Who <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent drop-shadow-sm">
-              Protect Our Community
-            </span>
-          </motion.h1>
+        {/* Slide Content Overlay */}
+        <div className="container relative z-10 mx-auto max-w-6xl text-left text-white px-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="space-y-6 max-w-2xl"
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent/20 bg-accent/15 text-accent text-3xs font-extrabold tracking-widest uppercase">
+                <Sparkles className="h-3 w-3 fill-current animate-pulse" />
+                <span>{slides[currentSlide].tagline}</span>
+              </div>
 
-          <motion.p
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="mx-auto max-w-2xl text-base sm:text-lg text-muted-foreground leading-relaxed"
-          >
-            The Metropolitan Police Association is dedicated to advocating for the rights, safety, and professional interests of our officers, while building bridges of trust and collaboration in our neighborhoods.
-          </motion.p>
+              <h1 className="text-3xl font-black tracking-tight sm:text-5xl lg:text-6xl text-white leading-tight">
+                {slides[currentSlide].title}
+              </h1>
 
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
+              <p className="text-xs sm:text-sm text-white/80 leading-relaxed max-w-xl">
+                {slides[currentSlide].description}
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
+                <Link href="/dashboard" className="w-full sm:w-auto">
+                  <Button size="lg" className="w-full sm:w-auto rounded-xl px-8 h-12 bg-accent hover:bg-accent/90 text-accent-foreground font-extrabold text-xs shadow-xl shadow-accent/20">
+                    Access Members Portal
+                  </Button>
+                </Link>
+                <Link href="/about" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-xl px-8 h-12 border-white/20 text-white text-xs font-bold hover:bg-white/10">
+                    About Our Association
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Manual Slider Navigation buttons */}
+        <div className="absolute bottom-6 right-6 z-20 flex items-center gap-3">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={handlePrev}
+            className="h-10 w-10 rounded-full border-white/20 text-white bg-black/30 hover:bg-black/60 hover:text-white"
+            aria-label="Previous Slide"
           >
-            <Link href="/dashboard" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto rounded-xl px-8 h-12 bg-primary hover:bg-primary/95 text-primary-foreground font-semibold text-sm shadow-xl shadow-primary/20">
-                Access Members Portal
-              </Button>
-            </Link>
-            <Link href="/donate" className="w-full sm:w-auto">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-xl px-8 h-12 border-border text-sm font-semibold hover:bg-muted">
-                Make a Contribution
-              </Button>
-            </Link>
-          </motion.div>
+            <ChevronLeft className="h-5 w-5" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={handleNext}
+            className="h-10 w-10 rounded-full border-white/20 text-white bg-black/30 hover:bg-black/60 hover:text-white"
+            aria-label="Next Slide"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </Button>
+        </div>
+
+        {/* Indicator dots */}
+        <div className="absolute bottom-6 left-6 z-20 flex items-center gap-2">
+          {slides.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentSlide(idx)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                currentSlide === idx ? "w-6 bg-accent" : "w-2 bg-white/40"
+              }`}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
         </div>
       </section>
 
