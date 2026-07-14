@@ -3,20 +3,24 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Sun, Moon, Shield, User, Heart } from "lucide-react";
+import { Menu, X, Sun, Moon, Shield, User, Heart, LogOut, ShieldAlert } from "lucide-react";
 import { useTheme } from "../theme-provider";
+import { useDemo } from "@/lib/demo-context";
 import { Button } from "@/components/ui/button";
 
 export function Navbar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const { user, logout } = useDemo();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const navItems = [
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
     { name: "News & FAQ", href: "/news" },
-    { name: "Members Portal", href: "/dashboard" },
+    { name: "Contact", href: "/contact" },
+    ...(user ? [{ name: "Portal Dashboard", href: "/dashboard" }] : [{ name: "Members Portal", href: "/dashboard" }]),
+    { name: "Admin View", href: "/admin" },
   ];
 
   const isActive = (path: string) => pathname === path;
@@ -76,12 +80,26 @@ export function Navbar() {
           </Button>
 
           {/* Member Login CTA */}
-          <Link href="/dashboard">
-            <Button variant="outline" className="rounded-xl flex items-center gap-2 font-medium border-border">
-              <User className="h-4 w-4" />
-              Portal Login
-            </Button>
-          </Link>
+          {user ? (
+            <div className="flex items-center gap-3">
+              <Link href="/dashboard">
+                <Button variant="outline" className="rounded-xl flex items-center gap-2 font-medium border-border">
+                  <User className="h-4 w-4 text-accent" />
+                  <span>{user.name.split(" ")[1] || user.name}</span>
+                </Button>
+              </Link>
+              <Button variant="ghost" size="icon" onClick={logout} className="rounded-xl h-10 w-10 border border-border hover:bg-destructive/10 hover:text-destructive" title="Logout">
+                <LogOut className="h-4.5 w-4.5" />
+              </Button>
+            </div>
+          ) : (
+            <Link href="/dashboard">
+              <Button variant="outline" className="rounded-xl flex items-center gap-2 font-medium border-border">
+                <User className="h-4 w-4" />
+                Portal Login
+              </Button>
+            </Link>
+          )}
 
           {/* Support CTA */}
           <Link href="/donate">
@@ -141,12 +159,19 @@ export function Navbar() {
             ))}
             <div className="h-px bg-border my-2" />
             <div className="grid grid-cols-2 gap-3">
-              <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="w-full">
-                <Button variant="outline" className="rounded-xl w-full flex items-center justify-center gap-2">
-                  <User className="h-4 w-4" />
-                  Portal Login
+              {user ? (
+                <Button variant="outline" onClick={() => { logout(); setMobileMenuOpen(false); }} className="rounded-xl w-full flex items-center justify-center gap-2">
+                  <LogOut className="h-4 w-4" />
+                  Logout
                 </Button>
-              </Link>
+              ) : (
+                <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="w-full">
+                  <Button variant="outline" className="rounded-xl w-full flex items-center justify-center gap-2">
+                    <User className="h-4 w-4" />
+                    Portal Login
+                  </Button>
+                </Link>
+              )}
               <Link href="/donate" onClick={() => setMobileMenuOpen(false)} className="w-full">
                 <Button className="rounded-xl w-full bg-accent hover:bg-accent/90 text-accent-foreground flex items-center justify-center gap-2 font-bold">
                   <Heart className="h-4 w-4 fill-current" />
