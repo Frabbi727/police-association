@@ -31,7 +31,12 @@ import {
   X,
   Eye,
   EyeOff,
-  LayoutDashboard
+  LayoutDashboard,
+  Tag,
+  QrCode,
+  Briefcase,
+  Store,
+  ShoppingBag
 } from "lucide-react";
 
 // Form Validation Schema
@@ -81,6 +86,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const sidebarItems = [
     { name: t("Overview", "Overview"), href: "/dashboard", icon: LayoutDashboard },
     { name: t("Profile & ID Card", "Profile & ID Card"), href: "/dashboard/profile", icon: User },
+    { name: t("Discount Card", "Discount Card"), href: "/dashboard/discount", icon: Tag },
+    { name: t("Smart Visitor Pass", "Smart Visitor Pass"), href: "/dashboard/visitor", icon: QrCode },
+    { name: t("Job Circulars", "Job Circulars"), href: "/dashboard/jobs", icon: Briefcase },
+    { name: t("Business Directory", "Business Directory"), href: "/dashboard/business", icon: Store },
+    { name: t("Police Mart", "Police Mart"), href: "/dashboard/mart", icon: ShoppingBag },
     { name: t("Gym Booking", "Gym Booking"), href: "/dashboard/gym", icon: Calendar },
     { name: t("Library Catalog", "Library Catalog"), href: "/dashboard/library", icon: BookOpen },
     { name: t("Facility Bookings", "Facility Bookings"), href: "/dashboard/facilities", icon: Building },
