@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-import { Shield, Users, Heart, Award, Scale, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { Shield, Users, Heart, Award, Scale, Sparkles, ChevronLeft, ChevronRight, Bell, FileText, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useDemo } from "@/lib/demo-context";
 
@@ -25,6 +25,9 @@ const itemVariants: Variants = {
 export default function Home() {
   const { notices, t, language } = useDemo();
   const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [activeFacilityTab, setActiveFacilityTab] = React.useState<"library" | "gym" | "hostel" | "welfare">("library");
+  const [noticeFilter, setNoticeFilter] = React.useState<"all" | "notice" | "statement" | "congratulations">("all");
+  const [expandedNoticeId, setExpandedNoticeId] = React.useState<string | null>(null);
 
   const slides = [
     {
@@ -260,6 +263,145 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Facilities & Operations Showcase Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-card/10 border-b border-border">
+        <div className="container mx-auto max-w-7xl space-y-16">
+          <div className="text-center max-w-3xl mx-auto space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-accent">{t("Showcase", "Showcase")}</h2>
+            <p className="text-3xl font-extrabold sm:text-4xl tracking-tight">{t("Our Facilities & Member Services", "Our Facilities & Member Services")}</p>
+            <p className="text-sm text-muted-foreground">
+              {t("Explore the premium facilities and operations made available to our members through the online booking system.", "Explore the premium facilities and operations made available to our members through the online booking system.")}
+            </p>
+          </div>
+
+          {/* Tabs header */}
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 max-w-3xl mx-auto">
+            {[
+              { id: "library", label: t("Police Library", "Police Library") },
+              { id: "gym", label: t("Physical Fitness Gym", "Physical Fitness Gym") },
+              { id: "hostel", label: t("Transit Hostel", "Transit Hostel") },
+              { id: "welfare", label: t("Welfare & Consulting", "Welfare & Consulting") },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveFacilityTab(tab.id as any)}
+                className={`px-6 py-3 rounded-full text-xs font-bold transition-all duration-300 border ${
+                  activeFacilityTab === tab.id
+                    ? "bg-primary border-primary text-primary-foreground shadow-md shadow-primary/15"
+                    : "border-border bg-card hover:bg-muted text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Showcase Display Area */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-card rounded-3xl border border-border p-6 sm:p-8 lg:p-12 shadow-xl overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+
+            {/* Left Side: Animated Image container */}
+            <div className="lg:col-span-6 relative rounded-2xl overflow-hidden border border-border shadow-md aspect-4/3 group">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeFacilityTab}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.35 }}
+                  className="w-full h-full relative"
+                >
+                  <img
+                    src={
+                      activeFacilityTab === "library" ? "/images/facilities_library.jpg" :
+                      activeFacilityTab === "gym" ? "/images/facilities_gym.jpg" :
+                      activeFacilityTab === "hostel" ? "/images/facilities_hostel.jpg" :
+                      "/images/facilities_welfare.jpg"
+                    }
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    alt={activeFacilityTab}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Right Side: Showcase text details */}
+            <div className="lg:col-span-6 space-y-6 text-left relative z-10">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeFacilityTab}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-6"
+                >
+                  {/* Tab Title & Header */}
+                  <div>
+                    <span className="text-3xs font-extrabold uppercase tracking-wider text-accent bg-accent/10 px-2 py-0.5 rounded border border-accent/20">
+                      {activeFacilityTab === "library" ? t("Library Resources", "Library Resources") :
+                       activeFacilityTab === "gym" ? t("Wellness & Training", "Wellness & Training") :
+                       activeFacilityTab === "hostel" ? t("Guest Suites & Lodging", "Guest Suites & Lodging") :
+                       t("Welfare Support Office", "Welfare Support Office")}
+                    </span>
+                    <h3 className="text-2xl font-extrabold text-foreground mt-3">
+                      {activeFacilityTab === "library" ? t("BPA Central Library", "BPA Central Library") :
+                       activeFacilityTab === "gym" ? t("Rajarbagh Police Gym", "Rajarbagh Police Gym") :
+                       activeFacilityTab === "hostel" ? t("Police Transit Hostel", "Police Transit Hostel") :
+                       t("Member Welfare Operations", "Member Welfare Operations")}
+                    </h3>
+                  </div>
+
+                  {/* Descriptions */}
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {activeFacilityTab === "library" ?
+                      t("Features over 5,000 reference volumes, penal codes, legal reviews, and historical archives. Members can search, review checkout statuses, and borrow volumes dynamically using their online library account.", "Features over 5,000 reference volumes, penal codes, legal reviews, and historical archives. Members can search, review checkout statuses, and borrow volumes dynamically using their online library account.") :
+                     activeFacilityTab === "gym" ?
+                      t("State-of-the-art cardiovascular and strength conditioning equipment open 24/7 at Rajarbagh. Active members can view current trainer availability and reserve personal slots to avoid overcrowding.", "State-of-the-art cardiovascular and strength conditioning equipment open 24/7 at Rajarbagh. Active members can view current trainer availability and reserve personal slots to avoid overcrowding.") :
+                     activeFacilityTab === "hostel" ?
+                      t("Provides high-quality premium guest suites for officers on official transit or family visits. Features fully automated reservation systems, check-in details, and real-time ledger billing via the payments portal.", "Provides high-quality premium guest suites for officers on official transit or family visits. Features fully automated reservation systems, check-in details, and real-time ledger billing via the payments portal.") :
+                      t("A dedicated counseling center offering family assistance grants, scholarship applications, and retired officer welfare resources. Claims can be submitted online with live tracker status updates.", "A dedicated counseling center offering family assistance grants, scholarship applications, and retired officer welfare resources. Claims can be submitted online with live tracker status updates.")}
+                  </p>
+
+                  {/* Highlights Grid */}
+                  <div className="grid grid-cols-2 gap-4 border-t border-border pt-6">
+                    <div>
+                      <h4 className="text-3xs font-extrabold uppercase text-muted-foreground tracking-wider">
+                        {activeFacilityTab === "library" ? t("Borrowing Limit", "Borrowing Limit") :
+                         activeFacilityTab === "gym" ? t("Availability", "Availability") :
+                         activeFacilityTab === "hostel" ? t("Room Capacities", "Room Capacities") :
+                         t("Processing Speed", "Processing Speed")}
+                      </h4>
+                      <p className="text-xs font-bold text-foreground mt-1">
+                        {activeFacilityTab === "library" ? t("3 Books / 14 Days", "3 Books / 14 Days") :
+                         activeFacilityTab === "gym" ? t("24/7 Access Card", "24/7 Access Card") :
+                         activeFacilityTab === "hostel" ? t("6 Suites (Rajarbagh)", "6 Suites (Rajarbagh)") :
+                         t("24-48 Hours Review", "24-48 Hours Review")}
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="text-3xs font-extrabold uppercase text-muted-foreground tracking-wider">
+                        {activeFacilityTab === "library" ? t("Search Roster", "Search Roster") :
+                         activeFacilityTab === "gym" ? t("Daily Reservation", "Daily Reservation") :
+                         activeFacilityTab === "hostel" ? t("Booking Fee", "Booking Fee") :
+                         t("Emergency Hotline", "Emergency Hotline")}
+                      </h4>
+                      <p className="text-xs font-bold text-foreground mt-1 text-primary">
+                        {activeFacilityTab === "library" ? t("Digital OPAC System", "Digital OPAC System") :
+                         activeFacilityTab === "gym" ? t("Up to 2 Hours / Day", "Up to 2 Hours / Day") :
+                         activeFacilityTab === "hostel" ? t("৳৫০০ - ৳১,০০০ / Night", "৳৫০০ - ৳১,০০০ / Night") :
+                         t("+880 1320-001299", "+880 1320-001299")}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Core Values Section */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-background border-b border-border">
         <div className="container mx-auto max-w-7xl space-y-16">
@@ -309,6 +451,155 @@ export default function Home() {
               </motion.div>
             ))}
           </motion.div>
+        </div>
+      </section>
+
+      {/* Official Notice Board Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-background border-b border-border">
+        <div className="container mx-auto max-w-7xl space-y-12">
+          
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-accent">{t("Official Notice Board & Media Hub", "Official Notice Board & Media Hub")}</h2>
+            <p className="text-3xl font-extrabold sm:text-4xl tracking-tight">
+              {t("Official Notice Board & Media Hub", "Official Notice Board & Media Hub")}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              {t("Stay updated with official announcements, press statements, and congratulations greetings.", "Stay updated with official announcements, press statements, and congratulations greetings.")}
+            </p>
+          </div>
+
+          {/* Filter Bar */}
+          <div className="flex flex-wrap justify-center gap-2 max-w-2xl mx-auto">
+            {[
+              { id: "all", label: t("All", "All") },
+              { id: "notice", label: t("Notices", "Notices") },
+              { id: "statement", label: t("Press Statements", "Press Statements") },
+              { id: "congratulations", label: t("Congratulations", "Congratulations") },
+            ].map((btn) => (
+              <button
+                key={btn.id}
+                onClick={() => {
+                  setNoticeFilter(btn.id as any);
+                  setExpandedNoticeId(null);
+                }}
+                className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-200 border ${
+                  noticeFilter === btn.id
+                    ? "bg-accent border-accent text-accent-foreground shadow-sm"
+                    : "border-border bg-card hover:bg-muted text-muted-foreground"
+                }`}
+              >
+                {btn.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Notice List */}
+          <div className="max-w-4xl mx-auto space-y-4">
+            {(() => {
+              const filtered = notices.filter(
+                (n) => noticeFilter === "all" || n.category === noticeFilter
+              );
+
+              if (filtered.length === 0) {
+                return (
+                  <div className="text-center py-12 text-sm text-muted-foreground border border-dashed border-border rounded-2xl">
+                    {t("No notices matching the selected filter.", "No notices matching the selected filter.")}
+                  </div>
+                );
+              }
+
+              return filtered.map((item) => {
+                const isExpanded = expandedNoticeId === item.id;
+                return (
+                  <div
+                    key={item.id}
+                    className={`border rounded-2xl transition-all duration-300 overflow-hidden bg-card/40 ${
+                      isExpanded ? "border-accent/40 shadow-md ring-1 ring-accent/10" : "border-border hover:border-border-hover"
+                    }`}
+                  >
+                    {/* Header Row */}
+                    <div
+                      onClick={() => setExpandedNoticeId(isExpanded ? null : item.id)}
+                      className="p-5 sm:p-6 flex items-start gap-4 cursor-pointer select-none"
+                    >
+                      {/* Icon Indicator based on Category */}
+                      <div className={`p-2.5 rounded-xl shrink-0 ${
+                        item.category === "notice" ? "bg-blue-500/10 text-blue-500" :
+                        item.category === "statement" ? "bg-amber-500/10 text-amber-500" :
+                        "bg-emerald-500/10 text-emerald-500"
+                      }`}>
+                        {item.category === "notice" ? <Bell className="h-5 w-5" /> :
+                         item.category === "statement" ? <FileText className="h-5 w-5" /> :
+                         <Award className="h-5 w-5" />}
+                      </div>
+
+                      {/* Title & Metadata */}
+                      <div className="flex-1 min-w-0 space-y-1.5 text-left">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-3xs font-extrabold uppercase tracking-wider text-muted-foreground bg-muted px-2 py-0.5 rounded border border-border/60">
+                            {item.id}
+                          </span>
+                          <span className={`text-3xs font-extrabold uppercase tracking-wider px-2 py-0.5 rounded border ${
+                            item.category === "notice" ? "bg-blue-500/5 text-blue-500 border-blue-500/10" :
+                            item.category === "statement" ? "bg-amber-500/5 text-amber-500 border-amber-500/10" :
+                            "bg-emerald-500/5 text-emerald-500 border-emerald-500/10"
+                          }`}>
+                            {t(item.category, item.category)}
+                          </span>
+                          <span className="text-3xs text-muted-foreground ml-auto sm:ml-0">
+                            {t("Date Published", "Date Published")}: {t(item.date, item.date)}
+                          </span>
+                        </div>
+                        <h3 className="font-bold text-sm sm:text-base text-foreground leading-snug">
+                          {t(item.title, item.title)}
+                        </h3>
+                      </div>
+
+                      {/* Expand Arrow */}
+                      <div className="text-muted-foreground shrink-0 self-center">
+                        {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                      </div>
+                    </div>
+
+                    {/* Expandable Details Body */}
+                    <AnimatePresence initial={false}>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ height: 0 }}
+                          animate={{ height: "auto" }}
+                          exit={{ height: 0 }}
+                          transition={{ duration: 0.25, ease: "easeInOut" }}
+                          className="border-t border-border bg-card/10 overflow-hidden"
+                        >
+                          <div className="p-6 text-left space-y-4">
+                            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                              {t(item.content, item.content)}
+                            </p>
+
+                            <div className="flex flex-wrap gap-x-8 gap-y-2 border-t border-border/60 pt-4 text-3xs text-muted-foreground">
+                              <div>
+                                <span className="font-semibold block text-foreground uppercase tracking-wider">{t("Signing Authority", "Signing Authority")}</span>
+                                <span className="mt-0.5 block">
+                                  {item.category === "statement" ? t("BPSA Spokesperson", "BPSA Spokesperson") :
+                                   item.category === "congratulations" ? t("Executive Committee", "Executive Committee") :
+                                   t("Office of General Secretary", "Office of General Secretary")}
+                                </span>
+                              </div>
+                              <div>
+                                <span className="font-semibold block text-foreground uppercase tracking-wider">{t("Date Published", "Date Published")}</span>
+                                <span className="mt-0.5 block">{t(item.date, item.date)}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              });
+            })()}
+          </div>
         </div>
       </section>
 

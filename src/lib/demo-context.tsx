@@ -17,7 +17,7 @@ export interface Notice {
   date: string;
   title: string;
   content: string;
-  category: "General" | "Legal" | "Operational" | "Emergency";
+  category: string;
 }
 
 export interface Announcement {
@@ -156,10 +156,48 @@ const defaultMembers: Member[] = [
 ];
 
 const defaultNotices: Notice[] = [
-  { id: "NT-101", date: "2026-07-12", title: "Upcoming Bargaining Agreement Meeting", content: "A special general body meeting will be held on July 25th at the central auditorium to discuss the terms of the new collective bargaining agreement.", category: "General" },
-  { id: "NT-102", date: "2026-07-10", title: "Mandatory Body Camera Review Policy Change", content: "The state has updated guidelines regarding post-incident review of body camera footage. Review the updated Legal Guidance document under Documents.", category: "Legal" },
-  { id: "NT-103", date: "2026-07-08", title: "Welfare Fund Annual Contributions Update", content: "Effective next pay cycle, voluntary payroll contributions to the Officer Relief and Welfare Fund will increase by 0.5% for all opting members.", category: "Operational" },
-  { id: "NT-104", date: "2026-07-05", title: "Emergency Representation Support Hotline", content: "If you are involved in a critical incident, call our 24/7 emergency legal representation line immediately at (555) 911-MPA1.", category: "Emergency" },
+  {
+    id: "NT-101",
+    date: "2026-07-15",
+    title: "General Notice: Membership Roster Auditing 2026",
+    content: "All members are requested to audit and update their profile details (mobile number, current division, rank) under the Profile Settings tab. The data will be synced with the central office records for active duty cards.",
+    category: "notice"
+  },
+  {
+    id: "NT-102",
+    date: "2026-07-12",
+    title: "Official Statement: Demands for Separate Police Pay Scale",
+    content: "The Bangladesh Police Association (BDPA) executive committee has issued a statement outlining our formal demands to the Ministry of Home Affairs. This includes revisions to basic wages, separate risk allowances for field constables, and pension protections.",
+    category: "statement"
+  },
+  {
+    id: "NT-103",
+    date: "2026-07-10",
+    title: "Congratulations: Kamrul Hasan Talukdar Elected President",
+    content: "The association expresses its warmest congratulations to Inspector Kamrul Hasan Talukdar for being elected unopposed as the President of the Bangladesh Police Association. We look forward to strong representation and member welfare under his leadership.",
+    category: "congratulations"
+  },
+  {
+    id: "NT-104",
+    date: "2026-07-08",
+    title: "General Notice: Transit Hostel Suites Reservation Policy",
+    content: "Effective immediately, the transit hostel suites at Rajarbagh Police Lines can be booked online via the Member Dashboard. Active duty officers must submit their badge verification code during booking to claim subsidized rates.",
+    category: "notice"
+  },
+  {
+    id: "NT-105",
+    date: "2026-07-06",
+    title: "Official Statement: BDPA Condemns Acts of Violence Against On-Duty Officers",
+    content: "A formal statement was issued by the General Secretary Monirul Haque Dablu condemning recent incident developments. The BDPA chief legal team is providing immediate representation and full support to the affected officers.",
+    category: "statement"
+  },
+  {
+    id: "NT-106",
+    date: "2026-07-03",
+    title: "Congratulations: Inspector Monirul Haque Dablu Elected General Secretary",
+    content: "Congratulations to Inspector Monirul Haque Dablu for his election as the General Secretary of the BDPA central executive committee. We welcome his dedication and representation goals.",
+    category: "congratulations"
+  }
 ];
 
 const defaultAnnouncements: Announcement[] = [
@@ -402,6 +440,33 @@ const translationDict: Record<string, string> = {
   "Strengthening police-community relations through neighborhood events.": "সামাজিক কর্মসূচির মাধ্যমে পুলিশ ও জনগণের সম্পর্ক শক্তিশালী করা।",
   "Official Facebook Page": "অফিসিয়াল ফেসবুক পেজ",
   "Link": "লিঙ্ক",
+  "Official Notice Board & Media Hub": "অফিসিয়াল নোটিশ বোর্ড ও মিডিয়া হাব",
+  "Stay updated with official announcements, press statements, and congratulations greetings.": "অফিসিয়াল ঘোষণা, প্রেস বিবৃতি এবং অভিনন্দন বার্তাগুলোর সাথে আপডেট থাকুন।",
+  "All Notices": "সকল নোটিশ",
+  "Press Statements": "প্রেস বিবৃতি",
+  "Congratulations": "অভিনন্দন ও অভিনন্দন বার্তা",
+  "General Notice: Membership Roster Auditing 2026": "সাধারণ নোটিশ: সদস্য তালিকা নিরীক্ষা ২০২৬",
+  "All members are requested to audit and update their profile details (mobile number, current division, rank) under the Profile Settings tab. The data will be synced with the central office records for active duty cards.": "সকল সদস্যকে প্রোফাইল সেটিংস ট্যাবের অধীনে তাদের প্রোফাইল বিবরণ (মোবাইল নম্বর, বর্তমান বিভাগ, পদবি) নিরীক্ষা ও আপডেট করার জন্য অনুরোধ করা হচ্ছে। এই তথ্যগুলি কেন্দ্রীয় অফিসের নথির সাথে সমন্বয় করা হবে।",
+  "Official Statement: Demands for Separate Police Pay Scale": "অফিসিয়াল বিবৃতি: পৃথক পুলিশ বেতন স্কেলের দাবি",
+  "The Bangladesh Police Association (BDPA) executive committee has issued a statement outlining our formal demands to the Ministry of Home Affairs. This includes revisions to basic wages, separate risk allowances for field constables, and pension protections.": "বাংলাদেশ পুলিশ অ্যাসোসিয়েশন (বিডিপিএ) কার্যনির্বাহী কমিটি স্বরাষ্ট্র মন্ত্রণালয়ে আমাদের আনুষ্ঠানিক দাবি তুলে ধরে একটি বিবৃতি জারি করেছে। এর মধ্যে মূল বেতন সংশোধন, মাঠ পর্যায়ের কনস্টেবলদের জন্য পৃথক ঝুঁকি ভাতা এবং পেনশন সুরক্ষা অন্তর্ভুক্ত রয়েছে।",
+  "Congratulations: Kamrul Hasan Talukdar Elected President": "অভিনন্দন: কামরুল হাসান তালুকদার সভাপতি নির্বাচিত",
+  "The association expresses its warmest congratulations to Inspector Kamrul Hasan Talukdar for being elected unopposed as the President of the Bangladesh Police Association. We look forward to strong representation and member welfare under his leadership.": "বাংলাদেশ পুলিশ অ্যাসোসিয়েশনের সভাপতি হিসেবে বিনা প্রতিদ্বন্দ্বিতায় নির্বাচিত হওয়ায় ইন্সপেক্টর কামরুল হাসান তালুকদারকে অ্যাসোসিয়েশন আন্তরিক অভিনন্দন জানাচ্ছে। আমরা তাঁর নেতৃত্বে শক্তিশালী প্রতিনিধিত্ব এবং সদস্য কল্যাণের প্রত্যাশা করছি।",
+  "General Notice: Transit Hostel Suites Reservation Policy": "সাধারণ নোটিশ: ট্রানজিট হোস্টেল সুইট সংরক্ষণ নীতিমালা",
+  "Effective immediately, the transit hostel suites at Rajarbagh Police Lines can be booked online via the Member Dashboard. Active duty officers must submit their badge verification code during booking to claim subsidized rates.": "অবিলম্বে কার্যকর, রাজারবাগ পুলিশ লাইন্সের ট্রানজিট হোস্টেল সুইটগুলি মেম্বার ড্যাশবোর্ডের মাধ্যমে অনলাইনে বুক করা যাবে। ভর্তুকিযুক্ত হারের জন্য বুকিংয়ের সময় অবশ্যই ব্যাজ নম্বর প্রদান করতে হবে।",
+  "Official Statement: BDPA Condemns Acts of Violence Against On-Duty Officers": "অফিসিয়াল বিবৃতি: অন-ডিউটি কর্মকর্তাদের ওপর সহিংসতার তীব্র নিন্দা",
+  "A formal statement was issued by the General Secretary Monirul Haque Dablu condemning recent incident developments. The BDPA chief legal team is providing immediate representation and full support to the affected officers.": "সাম্প্রতিক অনাকাঙ্ক্ষিত ঘটনার তীব্র নিন্দা জানিয়ে সাধারণ সম্পাদক মনিরুল হক ডাবলু একটি আনুষ্ঠানিক বিবৃতি জারি করেছেন। বিডিপিএ প্রধান আইনি দল ক্ষতিগ্রস্ত কর্মকর্তাদের তাৎক্ষণিক প্রতিনিধিত্ব এবং সম্পূর্ণ সহায়তা প্রদান করছে।",
+  "Congratulations: Inspector Monirul Haque Dablu Elected General Secretary": "অভিনন্দন: ইন্সপেক্টর মনিরুল হক ডাবলু সাধারণ সম্পাদক নির্বাচিত",
+  "Congratulations to Inspector Monirul Haque Dablu for his election as the General Secretary of the BDPA central executive committee. We welcome his dedication and representation goals.": "বিডিপিএ কেন্দ্রীয় কার্যনির্বাহী কমিটির সাধারণ সম্পাদক হিসেবে নির্বাচিত হওয়ায় ইন্সপেক্টর মনিরুল হক ডাবলুকে অভিনন্দন। আমরা তাঁর উৎসর্গ এবং প্রতিনিধিত্বমূলক লক্ষ্যকে স্বাগত জানাই।",
+  "Signing Authority": "স্বাক্ষরকারী কর্তৃপক্ষ",
+  "Date Published": "প্রকাশের তারিখ",
+  "Read Full Details": "বিস্তারিত বিবরণ",
+  "Close Details": "বন্ধ করুন",
+  "Filter by Category": "ক্যাটাগরি ফিল্টার",
+  "All": "সকল",
+  "No notices matching the selected filter.": "নির্বাচিত ফিল্টারের সাথে মিলে যাওয়া কোনো নোটিশ নেই।",
+  "statement": "বিবৃতি",
+  "notice": "নোটিশ",
+  "congratulations": "অভিনন্দন",
 };
 
 export function DemoProvider({ children }: { children: React.ReactNode }) {
