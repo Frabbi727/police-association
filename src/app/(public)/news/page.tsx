@@ -51,7 +51,7 @@ export default function News() {
       title: t("Association Welcomes New Officers in Rajarbagh Ceremony", "Association Welcomes New Officers in Rajarbagh Ceremony"),
       date: "June 15, 2026",
       category: t("Member News", "Member News"),
-      summary: t("President Kamrul Hasan Talukdar and members of the board officially welcomed the graduating class of constables and sub-inspectors this week.", "President Kamrul Hasan Talukdar and members of the board officially welcomed the graduating class of constables and sub-inspectors this week."),
+      summary: t("President Mosleh Uddin Ahmed and members of the board officially welcomed the graduating class of constables and sub-inspectors this week.", "President Mosleh Uddin Ahmed and members of the board officially welcomed the graduating class of constables and sub-inspectors this week."),
     },
     {
       title: t("Welfare Fund Education Grants Open for Dependents", "Welfare Fund Education Grants Open for Dependents"),

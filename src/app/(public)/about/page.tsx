@@ -10,24 +10,32 @@ export default function About() {
 
   const boardMembers = [
     {
-      name: t("Kamrul Hasan Talukdar", "Kamrul Hasan Talukdar"),
-      role: t("President, Bangladesh Police Association", "President, Bangladesh Police Association"),
-      bio: t("Oversees the association's strategic direction, legal defense, and welfare advocacy for non-cadre police officers across Bangladesh.", "Oversees the association's strategic direction, legal defense, and welfare advocacy for non-cadre police officers across Bangladesh."),
+      name: t("Mosleh Uddin Ahmed", "Mosleh Uddin Ahmed"),
+      role: t("President, Bangladesh Police Service Association", "President, Bangladesh Police Service Association"),
+      bio: t("Oversees the association's strategic direction, representative policy, and welfare initiatives for the central committee of police service officers.", "Oversees the association's strategic direction, representative policy, and welfare initiatives for the central committee of police service officers."),
+      image: "/images/1.jpeg",
+      imageClassName: "h-full w-full object-cover object-left scale-[1.6] origin-left"
     },
     {
-      name: t("Monirul Haque Dablu", "Monirul Haque Dablu"),
-      role: t("General Secretary, Bangladesh Police Association", "General Secretary, Bangladesh Police Association"),
-      bio: t("Manages union coordination, communications, member relations, and representations of our force nationwide.", "Manages union coordination, communications, member relations, and representations of our force nationwide."),
+      name: t("Shamima Parveen", "Shamima Parveen"),
+      role: t("General Secretary, Bangladesh Police Service Association", "General Secretary, Bangladesh Police Service Association"),
+      bio: t("Manages coordination, communications, member relations, and representations of BPSA operations nationwide.", "Manages coordination, communications, member relations, and representations of BPSA operations nationwide."),
+      image: "/images/1.jpeg",
+      imageClassName: "h-full w-full object-cover object-right scale-[1.6] origin-right"
     },
     {
       name: t("Md. Abdullahhel Baki", "Md. Abdullahhel Baki"),
       role: t("Vice President, Bangladesh Police Association", "Vice President, Bangladesh Police Association"),
       bio: t("Coordinates community outreach, regional committees, and public relations partnerships for the association.", "Coordinates community outreach, regional committees, and public relations partnerships for the association."),
+      image: "/images/309563497_415511680752905_2210960597977463845_n.png",
+      imageClassName: "h-12 w-12 object-contain"
     },
     {
       name: t("Md. Daud Hossain", "Md. Daud Hossain"),
       role: t("Treasurer, Bangladesh Police Association", "Treasurer, Bangladesh Police Association"),
       bio: t("Manages the welfare fund distribution, financial audits, and charity program operations of the association.", "Manages the welfare fund distribution, financial audits, and charity program operations of the association."),
+      image: "/images/309563497_415511680752905_2210960597977463845_n.png",
+      imageClassName: "h-12 w-12 object-contain"
     },
   ];
 
@@ -108,12 +116,12 @@ export default function About() {
                 className="p-6 rounded-2xl border border-border bg-card hover:border-primary/50 transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  {/* Logo header rendering */}
+                  {/* Logo or portrait header rendering */}
                   <div className="h-16 w-16 rounded-2xl bg-card text-muted-foreground flex items-center justify-center mb-4 border border-border shadow-inner overflow-hidden">
                     <img
-                      src="/images/309563497_415511680752905_2210960597977463845_n.png"
-                      className="h-12 w-12 object-contain"
-                      alt="Logo"
+                      src={member.image}
+                      className={member.imageClassName}
+                      alt={member.name}
                     />
                   </div>
                   <h3 className="font-bold text-foreground text-sm">{member.name}</h3>

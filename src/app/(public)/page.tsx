@@ -226,6 +226,131 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Newly Elected Central Committee Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-900/10 border-b border-border relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent pointer-events-none" />
+        <div className="container mx-auto max-w-7xl space-y-16">
+          <div className="text-center max-w-3xl mx-auto space-y-4">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-2xs font-medium bg-accent/10 text-accent border border-accent/20">
+              <Sparkles className="h-3.5 w-3.5 animate-pulse" />
+              {t("Newly Elected Committee", "Newly Elected Committee")}
+            </span>
+            <h2 className="text-3xl font-extrabold sm:text-4xl tracking-tight text-foreground bg-gradient-to-r from-foreground via-foreground to-accent bg-clip-text">
+              {t("Newly Elected Committee of Bangladesh Police Service Association", "Newly Elected Committee of Bangladesh Police Service Association")}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {t("The central executive committee for the term of 2026-2027.", "The central executive committee for the term of 2026-2027.")}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            {/* Leadership Portrait Card */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="lg:col-span-7 rounded-3xl border border-border bg-card/60 backdrop-blur-md overflow-hidden shadow-xl hover:shadow-2xl hover:border-primary/50 transition-all duration-500 group"
+            >
+              <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden border-b border-border">
+                <img 
+                  src="/images/1.jpeg" 
+                  alt={t("President & Secretary", "President & Secretary")}
+                  className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-700 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
+                <div className="absolute bottom-4 left-6 right-6 flex justify-between items-end">
+                  <span className="text-2xs font-semibold uppercase tracking-wider text-accent-foreground bg-accent px-2.5 py-1 rounded-md shadow-sm">
+                    {t("President & Secretary", "President & Secretary")}
+                  </span>
+                </div>
+              </div>
+              <div className="p-8 space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 divide-y sm:divide-y-0 sm:divide-x divide-border">
+                  {/* President Profile */}
+                  <div className="space-y-3 pr-0 sm:pr-4">
+                    <div>
+                      <span className="text-3xs uppercase tracking-widest text-accent font-bold">
+                        {t("President, Bangladesh Police Service Association", "President, Bangladesh Police Service Association")}
+                      </span>
+                      <h3 className="text-lg font-bold text-foreground mt-1">
+                        {t("Mosleh Uddin Ahmed", "Mosleh Uddin Ahmed")}
+                      </h3>
+                      <p className="text-xs text-muted-foreground font-medium mt-0.5">
+                        {t("Additional IG, CID", "Additional IG, CID")}
+                      </p>
+                    </div>
+                    <p className="text-2xs text-muted-foreground leading-relaxed">
+                      {t("Directing the association's strategic policy, welfare initiatives, and representation of BPSA members nationwide.", "Directing the association's strategic policy, welfare initiatives, and representation of BPSA members nationwide.")}
+                    </p>
+                  </div>
+                  {/* Secretary Profile */}
+                  <div className="space-y-3 pt-6 sm:pt-0 pl-0 sm:pl-6">
+                    <div>
+                      <span className="text-3xs uppercase tracking-widest text-accent font-bold">
+                        {t("General Secretary, Bangladesh Police Service Association", "General Secretary, Bangladesh Police Service Association")}
+                      </span>
+                      <h3 className="text-lg font-bold text-foreground mt-1">
+                        {t("Shamima Parveen", "Shamima Parveen")}
+                      </h3>
+                      <p className="text-xs text-muted-foreground font-medium mt-0.5">
+                        {t("Superintendent of Police", "Superintendent of Police")}
+                      </p>
+                    </div>
+                    <p className="text-2xs text-muted-foreground leading-relaxed">
+                      {t("Coordinating administration, membership communications, regional committee alignments, and structural operations.", "Coordinating administration, membership communications, regional committee alignments, and structural operations.")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Gallery Cards */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="lg:col-span-5 flex flex-col gap-6"
+            >
+              {/* Photo 2 */}
+              <div className="rounded-3xl border border-border bg-card/40 backdrop-blur-sm overflow-hidden group hover:border-primary/40 transition-all duration-300">
+                <div className="relative aspect-[16/10] w-full overflow-hidden">
+                  <img 
+                    src="/images/2.jpeg" 
+                    alt={t("Committees Celebration Gallery", "Committees Celebration Gallery")}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-90" />
+                  <div className="absolute bottom-4 left-6 right-6">
+                    <p className="text-xs font-bold text-white">
+                      {t("Reception ceremony with flower bouquets at BPSA central office.", "Reception ceremony with flower bouquets at BPSA central office.")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Photo 3 */}
+              <div className="rounded-3xl border border-border bg-card/40 backdrop-blur-sm overflow-hidden group hover:border-primary/40 transition-all duration-300">
+                <div className="relative aspect-[16/10] w-full overflow-hidden">
+                  <img 
+                    src="/images/3.jpeg" 
+                    alt={t("Committees Celebration Gallery", "Committees Celebration Gallery")}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-90" />
+                  <div className="absolute bottom-4 left-6 right-6">
+                    <p className="text-xs font-bold text-white">
+                      {t("Formal reception and discussion at the executive office.", "Formal reception and discussion at the executive office.")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Statistics Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 border-b border-border bg-card/30 relative">
         <div className="container mx-auto max-w-7xl">
